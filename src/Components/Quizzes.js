@@ -6,6 +6,7 @@ import OpenAI from 'openai';
 import { Link } from 'react-router-dom';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ErrorOpenAI from './ErrorOpenAI';
 
 // MUI
 import {
@@ -41,7 +42,7 @@ const parseOpenAIResponse = (responseString) => {
   return { question, extractedData, answer };
 };
 
-export default function QuizAI({ user }) {
+export default function Quiz({ user }) {
   // state for openai's response
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
@@ -54,6 +55,7 @@ export default function QuizAI({ user }) {
   const [answerSelected, setAnswerSelected] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const [errorStatus, setErrorStatus] = useState(false);
 
   const quizDataNatureParks = [
     {
@@ -69,12 +71,8 @@ export default function QuizAI({ user }) {
       index: 2,
     },
     {
-      question: 'UniversalStudios',
-      index: 3,
-    },
-    {
       question: 'dummy question',
-      index: 4,
+      index: 3,
       counter: 0,
     },
   ];
@@ -123,7 +121,12 @@ export default function QuizAI({ user }) {
       setLoading(false);
     } catch (err) {
       setLoading(false);
+      setErrorStatus(true);
       console.error(`Error sending message due to: ${err}`);
+
+      setTimeout(() => {
+        setErrorStatus(false);
+      }, 10000);
     }
   };
 
@@ -157,139 +160,155 @@ export default function QuizAI({ user }) {
     setScore(0);
   };
 
+  // setTimeout(moveToNextQuestion, 1000);
   console.log(indexOfQuestion);
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Box className="link-container">
-          <AppLinks />
-        </Box>
-        <Box className="drawer-links">
-          <ListItem>
-            <Link to="/">
-              <ArrowBackIcon
-                sx={{
-                  marginRight: '300px',
-                  color: (theme) => theme.palette.primary.main,
-                }}
-              />
-            </Link>
-          </ListItem>
-        </Box>
-      </Box>
-      <Button onClick={() => getQuizFromOpenAI(quizDataNatureParks[0])}>
-        Start Quiz!
-      </Button>
-
-      {question ? (
-        <Typography
-          variant="h4"
-          sx={{
-            width: '900px',
-            marginBottom: '20px',
-            marginTop: '25px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          Question: {question}
-        </Typography>
-      ) : null}
-
-      {loading ? (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '50vh',
-          }}
-        >
-          <CircularProgress />
-        </Box>
+      {errorStatus ? (
+        <ErrorOpenAI />
       ) : (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '50vh',
-          }}
-        >
-          <Box>
-            {options ? (
-              <Grid container spacing={2} justifyContent="center">
-                {/* Wrap options in a separate Grid container */}
-                <Grid
-                  container
-                  item
-                  xs={12}
-                  md={6}
-                  lg={4}
-                  spacing={2}
-                  justifyContent="center"
-                >
-                  {options.map((option, index) => {
-                    const { letter, choice } = option;
-                    const isCorrect =
-                      answer === letter && selectedAnswerCorrectness === true;
-                    const isWrong =
-                      answer !== letter && selectedAnswerCorrectness === false;
-                    return (
-                      <Grid item key={index} xs={6}>
-                        <Paper
-                          elevation={3}
-                          sx={{
-                            padding: '10px',
-                            textAlign: 'center',
-                            width: '250px',
-                            height: '100px',
-                          }}
-                        >
-                          <Grid item xs={3}>
-                            <Typography
-                              variant="h4"
+        <Box className="main-quiz">
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box className="link-container">
+              <AppLinks />
+            </Box>
+            <Box className="drawer-links">
+              <ListItem>
+                <Link to="/">
+                  <ArrowBackIcon
+                    sx={{
+                      marginRight: '300px',
+                      color: (theme) => theme.palette.primary.main,
+                    }}
+                  />
+                </Link>
+              </ListItem>
+            </Box>
+          </Box>
+          <Button onClick={() => getQuizFromOpenAI(quizDataNatureParks[0])}>
+            Start Dummy Quiz!
+          </Button>
+
+          {question ? (
+            <Typography
+              variant="h4"
+              sx={{
+                width: '900px',
+                marginBottom: '20px',
+                marginTop: '25px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              Question: {question}
+            </Typography>
+          ) : null}
+
+          {loading ? (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '50vh',
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '50vh',
+              }}
+            >
+              <Box>
+                {options ? (
+                  <Grid container spacing={2} justifyContent="center">
+                    {/* Wrap options in a separate Grid container */}
+                    <Grid
+                      container
+                      item
+                      xs={12}
+                      md={6}
+                      lg={4}
+                      spacing={2}
+                      justifyContent="center"
+                    >
+                      {options.map((option, index) => {
+                        const { letter, choice } = option;
+                        const isCorrect =
+                          answer === letter &&
+                          selectedAnswerCorrectness === true;
+                        const isWrong =
+                          answer !== letter &&
+                          selectedAnswerCorrectness === false;
+                        return (
+                          <Grid item key={index} xs={6}>
+                            <Paper
+                              elevation={3}
                               sx={{
-                                color: isCorrect
-                                  ? 'green'
-                                  : isWrong
-                                  ? 'red'
-                                  : 'inherit',
+                                padding: '10px',
+                                textAlign: 'center',
+                                width: '250px',
+                                height: '100px',
                               }}
                             >
-                              {letter}
-                            </Typography>
+                              <Grid item xs={3}>
+                                <Typography
+                                  variant="h4"
+                                  sx={{
+                                    color: isCorrect
+                                      ? 'green'
+                                      : isWrong
+                                      ? 'red'
+                                      : 'inherit',
+                                  }}
+                                >
+                                  {letter}
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={9}>
+                                <Button
+                                  onClick={() => handleAnswerClick(letter)}
+                                  disabled={answerSelected}
+                                  fullWidth
+                                >
+                                  {choice}
+                                </Button>
+                              </Grid>
+                            </Paper>
                           </Grid>
-                          <Grid item xs={9}>
-                            <Button
-                              onClick={() => handleAnswerClick(letter)}
-                              disabled={answerSelected}
-                              fullWidth
-                            >
-                              {choice}
-                            </Button>
-                          </Grid>
-                        </Paper>
-                      </Grid>
-                    );
-                  })}
-                </Grid>
-              </Grid>
-            ) : null}
-          </Box>
+                        );
+                      })}
+                    </Grid>
+                  </Grid>
+                ) : null}
+              </Box>
+            </Box>
+          )}
+          {question && indexOfQuestion < quizDataNatureParks.length - 2 ? (
+            <Button onClick={moveToNextQuestion}>Move to next question</Button>
+          ) : null}
+          {indexOfQuestion >= quizDataNatureParks.length - 2 ? (
+            <Button onClick={resetQuiz}>Reset</Button>
+          ) : null}
+          <Button
+            onClick={() => {
+              setTimeout(moveToNextQuestion, 1000);
+            }}
+          >
+            Spam
+          </Button>
+          <Typography variant="h5">Your score: {score}</Typography>
         </Box>
       )}
-      {question && indexOfQuestion < quizDataNatureParks.length - 2 ? (
-        <Button onClick={moveToNextQuestion}>Move to next question</Button>
-      ) : null}
-      {indexOfQuestion >= quizDataNatureParks.length - 2 ? (
-        <Button onClick={resetQuiz}>Reset</Button>
-      ) : null}
-      <Typography variant="h5">Your score: {score}</Typography>
     </Box>
   );
 }

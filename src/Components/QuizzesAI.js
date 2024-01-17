@@ -25,8 +25,6 @@ const parseOpenAIResponse = (responseString) => {
 
   const answer = lines[lines.length - 1].split(': ')[1];
 
-  console.log(answer);
-
   const arrayOfOptions = lines
     .slice(1, -1)
     .filter((line) => line.trim() !== '');
@@ -55,8 +53,14 @@ export default function QuizAI({ user }) {
 
   const [loading, setLoading] = useState(false);
 
+  const [quizCategory, setQuizCategory] = useState('');
+
   const quizDataNatureParks = [
-    { question: 'Bukit Timah Nature Reserve', index: 0 },
+    {
+      question: 'Bukit Timah Nature Reserve',
+      index: 0,
+      category: 'Nature Parks',
+    },
     { question: 'MacRitchie Reservoir', index: 1 },
     { question: 'Sungei Buloh Wetland Reserve', index: 2 },
     { question: 'Labrador Nature Reserve', index: 3 },
@@ -69,10 +73,51 @@ export default function QuizAI({ user }) {
     { question: 'dummy question', index: 10, counter: 0 },
   ];
 
-  const quizDataHistoricalLandmarks = [];
+  const quizDataHistoricalLandmarks = [
+    { question: 'Raffles Hotel', index: 0, category: 'Historical Landmarks' },
+    { question: 'Old Hill Street Police Station', index: 1 },
+    { question: 'Former Ford Factory', index: 2 },
+    { question: 'Changi Chapel And Museum', index: 3 },
+    { question: 'Kranji War Memorial', index: 4 },
+    { question: 'Reflections At Bukit Chandu', index: 5 },
+    { question: 'Fort Canning Hill', index: 6 },
+    { question: 'Civilian War Memorial', index: 7 },
+    { question: 'Old Parliament House', index: 8 },
+    { question: 'The Fullerton Building', index: 9 },
+    { question: 'Victoria Theatre And Concert Hall', index: 10 },
+    { question: 'City Hall And Old Supreme Court Building', index: 11 },
+    { question: 'Battlebox At Fort Canning', index: 12 },
+    { question: 'Alkaff Mansion', index: 13 },
+    { question: 'Tiong Bahru Air Raid Shelter', index: 14 },
+    { question: 'Lim Bo Seng Memorial', index: 15 },
+    { question: 'Labrador Battery', index: 16 },
+    { question: 'Singapore Conference Hall', index: 17 },
+    { question: 'National Museum Of Singapore', index: 18 },
+    { question: 'dummy question', index: 19, counter: 0 },
+  ];
+
+  const quizDataPoliticalLandmarks = [
+    { question: 'ParliamentHouse', index: 0, category: 'Political Landmarks' },
+    { question: 'Istana', index: 1 },
+    { question: 'SupremeCourt', index: 2 },
+    { question: 'CityHall', index: 3 },
+    { question: 'NationalGallerySingapore', index: 4 },
+    { question: 'CivilianWarMemorial', index: 5 },
+    { question: 'OldParliamentHouse', index: 6 },
+    { question: 'VictoriaTheatreConcertHall', index: 7 },
+    { question: 'AsianCivilisationsMuseum', index: 8 },
+    { question: 'NationalMuseumofSingapore', index: 9 },
+    { question: 'ThePadang', index: 10 },
+    { question: 'FortCanningHill', index: 11 },
+    { question: 'TheFullertonBuilding', index: 12 },
+    { question: 'SingaporeConferenceHall', index: 13 },
+    { question: 'RafflesPlace', index: 14 },
+    { question: 'dummy question', index: 15, counter: 0 },
+  ];
 
   const getQuizFromOpenAI = async (argument) => {
     setLoading(true);
+    setQuizCategory(argument.category);
 
     if (answerSelected === true) {
       setAnswerSelected(false);
@@ -91,14 +136,10 @@ export default function QuizAI({ user }) {
       });
 
       const data = await response.json();
-      console.log(data.message);
 
       const { question, extractedData, answer } = parseOpenAIResponse(
         data.message,
       );
-
-      console.log(question);
-      console.log(extractedData);
 
       setQuestion(question);
       setOptions(extractedData);
@@ -132,7 +173,20 @@ export default function QuizAI({ user }) {
     setSelectedAnswerCorrectness(null);
     setAnswerSelected(false);
 
-    getQuizFromOpenAI(quizDataNatureParks[indexOfQuestion + 1]);
+    if (quizCategory === 'Nature Parks') {
+      getQuizFromOpenAI(quizDataNatureParks[indexOfQuestion + 1]);
+      setQuizCategory('Nature Parks');
+    }
+
+    if (quizCategory === 'Historical Landmarks') {
+      getQuizFromOpenAI(quizDataHistoricalLandmarks[indexOfQuestion + 1]);
+      setQuizCategory('Historical Landmarks');
+    }
+
+    if (quizCategory === 'Political Landmarks') {
+      getQuizFromOpenAI(quizDataPoliticalLandmarks[indexOfQuestion + 1]);
+      setQuizCategory('Political Landmarks');
+    }
   };
 
   const resetQuiz = () => {
@@ -142,8 +196,6 @@ export default function QuizAI({ user }) {
     setAnswer('');
     setScore(0);
   };
-
-  console.log(indexOfQuestion);
 
   return (
     <Box>
@@ -167,8 +219,11 @@ export default function QuizAI({ user }) {
       <Button onClick={() => getQuizFromOpenAI(quizDataNatureParks[0])}>
         Start Quiz on Nature Parks!
       </Button>
-      <Button onClick={() => getQuizFromOpenAI(quizDataNatureParks[0])}>
-        Start Quiz on Nature Parks!
+      <Button onClick={() => getQuizFromOpenAI(quizDataHistoricalLandmarks[0])}>
+        Start Quiz on Historical Landmarks!
+      </Button>
+      <Button onClick={() => getQuizFromOpenAI(quizDataPoliticalLandmarks[0])}>
+        Start Quiz on Political Landmarks!
       </Button>
 
       {question ? (
@@ -272,11 +327,32 @@ export default function QuizAI({ user }) {
           </Box>
         </Box>
       )}
-      {question && indexOfQuestion < quizDataNatureParks.length - 2 ? (
+      {question &&
+      indexOfQuestion < quizDataHistoricalLandmarks.length - 2 &&
+      quizCategory === 'Historical Landmarks' ? (
         <Button onClick={moveToNextQuestion}>Move to next question</Button>
       ) : null}
-      {indexOfQuestion >= quizDataNatureParks.length - 2 ? (
-        <Button onClick={resetQuiz}>Reset</Button>
+      {question &&
+      indexOfQuestion < quizDataNatureParks.length - 2 &&
+      quizCategory === 'Nature Parks' ? (
+        <Button onClick={moveToNextQuestion}>Move to next question</Button>
+      ) : null}
+      {question &&
+      indexOfQuestion < quizDataPoliticalLandmarks.length - 2 &&
+      quizCategory === 'Political Landmarks' ? (
+        <Button onClick={moveToNextQuestion}>Move to next question</Button>
+      ) : null}
+      {quizCategory === 'Nature Parks' &&
+      indexOfQuestion >= quizDataNatureParks.length - 2 ? (
+        <Button onClick={resetQuiz}>Reset Nature Parks Quiz</Button>
+      ) : null}
+      {quizCategory === 'Historical Landmarks' &&
+      indexOfQuestion >= quizDataHistoricalLandmarks.length - 2 ? (
+        <Button onClick={resetQuiz}>Reset Historical Landmarks Quiz</Button>
+      ) : null}
+      {quizCategory === 'Political Landmarks' &&
+      indexOfQuestion >= quizDataPoliticalLandmarks.length - 2 ? (
+        <Button onClick={resetQuiz}>Reset Political Landmarks Quiz</Button>
       ) : null}
       <Typography variant="h5">Your score: {score}</Typography>
     </Box>

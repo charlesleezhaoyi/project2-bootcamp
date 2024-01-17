@@ -18,6 +18,7 @@ import GuidePage from './Components/GuidePage';
 import Protected from './Components/Protected';
 import Onboarding from './Components/OnboardingForm';
 import { useNavigate } from 'react-router-dom';
+import ErrorOpenAI from './Components/ErrorOpenAI';
 
 const libraries = ['places'];
 
@@ -153,6 +154,14 @@ const AppMain = () => {
           element={
             <Protected isLoggedIn={isLoggedIn}>
               <GuidePage />
+            </Protected>
+          }
+        />
+        <Route
+          path="/error"
+          element={
+            <Protected isLoggedIn={isLoggedIn}>
+              <ErrorOpenAI />
             </Protected>
           }
         />

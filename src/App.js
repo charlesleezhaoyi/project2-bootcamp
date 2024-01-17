@@ -28,6 +28,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TemporaryDrawer from './Components/TemporaryDrawer';
 import FetchingDataAnimation from './Components/FetchingDataAnimation';
 import { useNavigate } from 'react-router-dom';
+import ErrorOpenAI from './Components/ErrorOpenAI';
 // import { mapToStyles } from "@popperjs/core/lib/modifiers/computeStyles";
 // import { assertExpressionStatement } from "@babel/types";
 
@@ -136,6 +137,8 @@ const App = ({ handleLogoutAppMain }) => {
 
   const [loading, setLoading] = useState(false);
 
+  const [errorStatus, setErrorStatus] = useState(false);
+
   const navigate = useNavigate();
 
   // Handling the drawer opening
@@ -186,6 +189,13 @@ const App = ({ handleLogoutAppMain }) => {
         body: JSON.stringify({ message: messageToSend }),
       });
 
+      if (!response.ok) {
+        // setErrorStatus(true);
+        console.log('TEST', loading);
+        navigate('/error');
+        throw new Error(`HTTP Error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
       setAiResponse(data.message);
       setUserMessage('');
@@ -195,6 +205,7 @@ const App = ({ handleLogoutAppMain }) => {
       setLoading(false);
     } catch (error) {
       setLoading(true);
+      setErrorStatus(true);
       console.error('Error sending message:', error);
       // Handle error state here if needed
     }
@@ -225,7 +236,9 @@ const App = ({ handleLogoutAppMain }) => {
 
   return (
     <Box className="app-container">
-      {loading ? (
+      {errorStatus ? (
+        <ErrorOpenAI />
+      ) : loading ? (
         <Box>
           <AppBackground />
           <FetchingDataAnimation />

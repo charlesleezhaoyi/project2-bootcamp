@@ -1,8 +1,8 @@
-const express = require("express");
-const { config } = require("dotenv");
-const { OpenAI } = require("openai");
-const cors = require("cors");
-const path = require("path");
+const express = require('express');
+const { config } = require('dotenv');
+const { OpenAI } = require('openai');
+const cors = require('cors');
+const path = require('path');
 
 config();
 
@@ -15,23 +15,23 @@ const openai = new OpenAI({
 
 // app.use(cors({ origin: "http://localhost:3001" }));
 app.use(cors());
-app.use(express.static("public1"));
+app.use(express.static('public1'));
 app.use(express.json());
 
-app.post("/send-message", async (req, res) => {
+app.post('/send-message', async (req, res) => {
   const userMessage = req.body.message;
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: userMessage }],
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'user', content: userMessage }],
     });
 
     const aiResponse = response.choices[0].message.content;
     res.json({ message: aiResponse });
   } catch (error) {
-    console.error("Error processing the message:", error);
-    res.status(500).json({ error: "Error processing the message" });
+    console.error('Error processing the message:', error);
+    res.status(500).json({ error: 'Error processing the message' });
   }
 });
 
