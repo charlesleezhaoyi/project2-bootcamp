@@ -64,15 +64,36 @@ const AppMain = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
 
-  // const navigate = useNavigate();
+  // Track whether the authentication state is still being determined by onAuthStateChanged
+  const [loading, setLoading] = useState(true);
 
+  // Old useEffect that does not work as onAuthStateChanged takes some time to authenticate whether user is logged in
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       setIsLoggedIn(true);
+  //       setUser(user);
+  //     }
+  //   });
+  // }, []);
+
+  // onAuthStateChanged's callback is called when browser loads and useEffect mounts this component
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    // onAuthStateChanged listener returns an unsubscribe function to stop listening to changes in auth state
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      // if user is logged in:
       if (user) {
         setIsLoggedIn(true);
         setUser(user);
       }
+      // Regardless of whether there is a user logged in or not, set loading to false to display either / or /sign-in
+      setLoading(false);
     });
+
+    // cleanup after user is determined
+    return () => {
+      unsubscribe(); // unsubscribe funtion is returned to unsubscribe listener when component unmounts
+    };
   }, []);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -85,7 +106,11 @@ const AppMain = () => {
   }
 
   if (!isLoaded) {
-    return <div>Loading maps</div>;
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        Loading maps
+      </div>
+    );
   }
 
   // PASS LOGOUT FUNCTION FROM APPMAIN TO APP SO THAT YOU CAN USE NAVIGATE(/SIGN-IN)
@@ -104,6 +129,10 @@ const AppMain = () => {
   };
 
   console.log(isLoggedIn);
+
+  if (loading) {
+    return <div>Loading</div>;
+  }
 
   return (
     <Router>

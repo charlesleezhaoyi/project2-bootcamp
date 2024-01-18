@@ -276,7 +276,11 @@ const App = ({ handleLogoutAppMain }) => {
                 />
                 <Typography
                   variant="h5"
-                  style={{ whiteSpace: 'nowrap', margin: '0' }}
+                  style={{
+                    whiteSpace: 'nowrap',
+                    margin: '0',
+                    fontFamily: 'cursive',
+                  }}
                 >
                   Merlion Landmarks
                 </Typography>
@@ -291,10 +295,9 @@ const App = ({ handleLogoutAppMain }) => {
             {isLoggedIn && (
               <StyledContainer>
                 <StyledGridItem item>
-                  <h2>Welcome back {user.email}</h2>
-                  <AppLinks />
+                  <h2 className="pills-landmarks">Welcome back {user.email}</h2>
 
-                  <Button
+                  {/* <Button
                     variant="outlined"
                     onClick={(e) => {
                       setIsLoggedIn(false);
@@ -304,7 +307,7 @@ const App = ({ handleLogoutAppMain }) => {
                     sx={{ marginLeft: '20px' }}
                   >
                     Log out
-                  </Button>
+                  </Button> */}
                 </StyledGridItem>
                 <StyledGridItem item sx={{ margin: '20px' }}>
                   <Box
@@ -326,48 +329,50 @@ const App = ({ handleLogoutAppMain }) => {
                     sendMessage={sendMessage}
                     landmarks={selectedLandmarks}
                   />
-                  <StyledGridPills
-                    item
-                    style={{ position: 'absolute', top: -40, left: 560 }}
-                  >
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        setSelectedLandmarks(natureParks);
-                      }}
-                      sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                  <Box className="pills-landmarks">
+                    <StyledGridPills
+                      item
+                      style={{ position: 'absolute', top: -40, left: 560 }}
                     >
-                      Nature Parks
-                    </Button>
-                  </StyledGridPills>
-                  <StyledGridPills
-                    item
-                    style={{ position: 'absolute', top: -40, left: 380 }}
-                  >
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        setSelectedLandmarks(politicalLandmarks);
-                      }}
-                      sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          setSelectedLandmarks(natureParks);
+                        }}
+                        sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                      >
+                        Nature Parks
+                      </Button>
+                    </StyledGridPills>
+                    <StyledGridPills
+                      item
+                      style={{ position: 'absolute', top: -40, left: 380 }}
                     >
-                      Political Landmarks
-                    </Button>
-                  </StyledGridPills>
-                  <StyledGridPills
-                    item
-                    style={{ position: 'absolute', top: -40, left: 200 }}
-                  >
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        setSelectedLandmarks(historicalLandmarks);
-                      }}
-                      sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          setSelectedLandmarks(politicalLandmarks);
+                        }}
+                        sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                      >
+                        Political Landmarks
+                      </Button>
+                    </StyledGridPills>
+                    <StyledGridPills
+                      item
+                      style={{ position: 'absolute', top: -40, left: 200 }}
                     >
-                      Historical Landmarks
-                    </Button>
-                  </StyledGridPills>
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          setSelectedLandmarks(historicalLandmarks);
+                        }}
+                        sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                      >
+                        Historical Landmarks
+                      </Button>
+                    </StyledGridPills>
+                  </Box>
                 </StyledGridItem>
               </StyledContainer>
             )}
