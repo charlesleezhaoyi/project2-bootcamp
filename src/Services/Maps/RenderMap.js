@@ -20,6 +20,7 @@ import { set, ref } from 'firebase/database';
 const mapContainerStyle = {
   width: '80vw',
   height: '80vh',
+  borderRadius: '1.5%',
 };
 const center = {
   lat: 1.3513,
@@ -97,7 +98,7 @@ export default function RenderMap({ sendMessage, landmarks }) {
         setSelectedPlace(res.data.results[0]);
         sendMessage(
           `You are a world class historian, who is as established as Associate Professor Joey Long, or Dr Masuda Hajimu, with expert knowledge on Singapore's every landmark and building, as well as its relevant historical developments. 
-          What is the name of this landmark with the following address:${res.data.results[0].formatted_address}. In 3 different paragraphs, separated by \n\n, share related historical events, and what developments occurred in the last 20 years in Singapore. Word limit is 200 words. Provide a break with the end of each paragraph`,
+          What is the name of this landmark with the following address:${res.data.results[0].formatted_address}. In just 5 short sentences in bullet point form, separated by \n\n, share related historical events, and what developments occurred in the last 20 years in Singapore. Word limit is 80 words.`,
         );
       });
   }, []);

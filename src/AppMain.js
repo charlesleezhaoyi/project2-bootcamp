@@ -38,7 +38,13 @@ const linkStyle = {
 // A separate component to render Links
 const AppLinks = () => (
   <>
-    <Box className="link-container" sx={{ display: 'flex', flexWrap: 'wrap' }}>
+    <Box
+      className="link-container"
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+      }}
+    >
       <Link to="/" style={linkStyle}>
         Map
       </Link>
