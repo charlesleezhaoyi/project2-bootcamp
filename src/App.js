@@ -189,6 +189,8 @@ const App = ({ handleLogoutAppMain }) => {
         body: JSON.stringify({ message: messageToSend }),
       });
 
+      console.log(response);
+
       if (!response.ok) {
         // setErrorStatus(true);
         console.log('TEST', loading);
@@ -206,6 +208,7 @@ const App = ({ handleLogoutAppMain }) => {
     } catch (error) {
       setLoading(true);
       setErrorStatus(true);
+      navigate('/error');
       console.error('Error sending message:', error);
       // Handle error state here if needed
     }
@@ -285,7 +288,7 @@ const App = ({ handleLogoutAppMain }) => {
                 >
                   Merlion Landmarks
                 </Typography>
-                <Box className="link-container">
+                <Box className="app-link-container">
                   <AppLinks />
                 </Box>
               </Box>

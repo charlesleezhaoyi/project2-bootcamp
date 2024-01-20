@@ -74,7 +74,12 @@ const GuidePage = () => {
       </Box>
       <Paper
         elevation={3}
-        sx={{ padding: '20px', marginTop: '20px', mx: '50px' }}
+        sx={{
+          padding: '20px',
+          marginTop: '20px',
+          mx: '50px',
+          borderRadius: '2%',
+        }}
       >
         <Typography
           variant="h4"

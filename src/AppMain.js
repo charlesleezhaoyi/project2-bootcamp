@@ -31,7 +31,7 @@ const linkStyle = {
   color: 'black',
   fontWeight: 'bold',
   fontSize: '30px',
-  display: 'flex',
+
   // flexDirection: 'column',
 };
 
@@ -43,6 +43,7 @@ const AppLinks = () => (
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
+        justifyContent: 'space-between',
       }}
     >
       <Link to="/" style={linkStyle}>
