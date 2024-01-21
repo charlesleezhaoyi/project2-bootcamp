@@ -250,48 +250,50 @@ const App = ({ handleLogoutAppMain }) => {
         <Box>
           <Box>
             {isLoggedIn ? (
-              <Box
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: '20px',
-                  margin: 0,
-                }}
-              >
-                <TemporaryDrawer
-                  aiResponse={aiResponse}
-                  clearAIResponse={clearAIResponse}
-                  onDrawerOpen={(func) => setDrawerRef(func)}
-                  sendMessage={sendMessage}
-                  handleAuthStateChanged={handleAuthStateChanged}
-                  isLoggedIn={isLoggedIn}
-                  handleLogout={handleLogout}
-                  loading={loading}
-                  historicalLandmarks={historicalLandmarks}
-                  natureParks={natureParks}
-                  politicalLandmarks={politicalLandmarks}
-                  setSelectedLandmarks={setSelectedLandmarks}
-                  renderMapComponent={
-                    <RenderMap
-                      sendMessage={sendMessage}
-                      landmarks={historicalLandmarks}
-                    />
-                  }
-                />
-                <Typography
-                  variant="h5"
+              <div className="google__map">
+                <Box
                   style={{
-                    whiteSpace: 'nowrap',
-                    margin: '0',
-                    fontFamily: 'cursive',
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: '20px',
+                    margin: 0,
                   }}
                 >
-                  Merlion Landmarks
-                </Typography>
-                <Box className="app-link-container">
-                  <AppLinks />
+                  <TemporaryDrawer
+                    aiResponse={aiResponse}
+                    clearAIResponse={clearAIResponse}
+                    onDrawerOpen={(func) => setDrawerRef(func)}
+                    sendMessage={sendMessage}
+                    handleAuthStateChanged={handleAuthStateChanged}
+                    isLoggedIn={isLoggedIn}
+                    handleLogout={handleLogout}
+                    loading={loading}
+                    historicalLandmarks={historicalLandmarks}
+                    natureParks={natureParks}
+                    politicalLandmarks={politicalLandmarks}
+                    setSelectedLandmarks={setSelectedLandmarks}
+                    renderMapComponent={
+                      <RenderMap
+                        sendMessage={sendMessage}
+                        landmarks={historicalLandmarks}
+                      />
+                    }
+                  />
+                  <Typography
+                    variant="h5"
+                    style={{
+                      whiteSpace: 'nowrap',
+                      margin: '0',
+                      fontFamily: 'cursive',
+                    }}
+                  >
+                    Merlion Landmarks
+                  </Typography>
+                  <Box className="app-link-container">
+                    <AppLinks />
+                  </Box>
                 </Box>
-              </Box>
+              </div>
             ) : (
               <AppBackground />
             )}
@@ -329,54 +331,56 @@ const App = ({ handleLogoutAppMain }) => {
                     marginTop: '0px',
                   }}
                 >
-                  <RenderMap
-                    sendMessage={sendMessage}
-                    landmarks={selectedLandmarks}
-                  />
-                  <Box className="pills-landmarks">
-                    <StyledGridPills
-                      item
-                      style={{ position: 'absolute', top: -40, left: 560 }}
-                    >
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          setSelectedLandmarks(natureParks);
-                        }}
-                        sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                  <div className="google__map">
+                    <RenderMap
+                      sendMessage={sendMessage}
+                      landmarks={selectedLandmarks}
+                    />
+                    <Box className="pills-landmarks">
+                      <StyledGridPills
+                        item
+                        style={{ position: 'absolute', top: -40, left: 560 }}
                       >
-                        Nature Parks
-                      </Button>
-                    </StyledGridPills>
-                    <StyledGridPills
-                      item
-                      style={{ position: 'absolute', top: -40, left: 380 }}
-                    >
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          setSelectedLandmarks(politicalLandmarks);
-                        }}
-                        sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            setSelectedLandmarks(natureParks);
+                          }}
+                          sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                        >
+                          Nature Parks
+                        </Button>
+                      </StyledGridPills>
+                      <StyledGridPills
+                        item
+                        style={{ position: 'absolute', top: -40, left: 380 }}
                       >
-                        Political Landmarks
-                      </Button>
-                    </StyledGridPills>
-                    <StyledGridPills
-                      item
-                      style={{ position: 'absolute', top: -40, left: 200 }}
-                    >
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          setSelectedLandmarks(historicalLandmarks);
-                        }}
-                        sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            setSelectedLandmarks(politicalLandmarks);
+                          }}
+                          sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                        >
+                          Political Landmarks
+                        </Button>
+                      </StyledGridPills>
+                      <StyledGridPills
+                        item
+                        style={{ position: 'absolute', top: -40, left: 200 }}
                       >
-                        Historical Landmarks
-                      </Button>
-                    </StyledGridPills>
-                  </Box>
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            setSelectedLandmarks(historicalLandmarks);
+                          }}
+                          sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                        >
+                          Historical Landmarks
+                        </Button>
+                      </StyledGridPills>
+                    </Box>
+                  </div>
                 </StyledGridItem>
               </StyledContainer>
             )}

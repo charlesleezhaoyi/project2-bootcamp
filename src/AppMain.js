@@ -38,30 +38,29 @@ const linkStyle = {
 // A separate component to render Links
 const AppLinks = () => (
   <>
-    <Box
-      className="link-container"
-      sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-      }}
-    >
-      <Link to="/" style={linkStyle}>
-        Map
-      </Link>
-      <Link to="/quizzes" style={linkStyle}>
-        Quizzes
-      </Link>
-      <Link to="/quizzesAI" style={linkStyle}>
-        Quizzes AI
-      </Link>
-      {/* <Link to="/onboarding" style={linkStyle}>
-        Onboarding
-      </Link> */}
-      <Link to="/guide" style={linkStyle}>
-        Guide
-      </Link>
-    </Box>
+    <div className="link-container">
+      <Box
+        className="link-container"
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Link to="/" style={linkStyle}>
+          Map
+        </Link>
+        <Link to="/quizzes" style={linkStyle}>
+          Quizzes
+        </Link>
+        <Link to="/quizzesAI" style={linkStyle}>
+          Quizzes AI
+        </Link>
+        <Link to="/guide" style={linkStyle}>
+          User Guide
+        </Link>
+      </Box>
+    </div>
   </>
 );
 

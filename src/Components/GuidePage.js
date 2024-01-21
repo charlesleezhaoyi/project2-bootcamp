@@ -229,7 +229,14 @@ const GuidePage = () => {
           </Box>
         </Box>
 
-        <Box className="slide slide--2">
+        <Box
+          className="slide slide--2"
+          sx={{
+            '@media all and (max-width: 500px)': {
+              marginTop: '40px',
+            },
+          }}
+        >
           <Box className="testimonial">
             <Typography
               variant="h5"
@@ -264,7 +271,14 @@ const GuidePage = () => {
           </Box>
         </Box>
 
-        <Box className="slide slide--3">
+        <Box
+          className="slide slide--3"
+          sx={{
+            '@media all and (max-width: 500px)': {
+              marginTop: '40px',
+            },
+          }}
+        >
           <Box className="testimonial">
             <Typography
               variant="h5"
@@ -274,7 +288,7 @@ const GuidePage = () => {
                 marginBottom: '1.5rem',
               }}
             >
-              Quizzes are challenging and informative!
+              Quizzes are challenging!
             </Typography>
             <Typography
               variant="p"
@@ -311,6 +325,10 @@ const GuidePage = () => {
             justifyContent: 'space-around',
 
             paddingRight: '220px',
+            '@media all and (max-width: 500px)': {
+              top: '40%',
+              justifyContent: 'space-between',
+            },
           }}
         >
           <Button

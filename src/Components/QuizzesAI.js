@@ -1,5 +1,14 @@
 import { useEffect, useState } from 'react';
-import { collection, addDoc, getDocs, deleteDoc } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+  setDoc,
+} from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { AppLinks } from '../AppMain';
@@ -77,42 +86,153 @@ export default function QuizAI({ user }) {
       question: 'Bukit Timah Nature Reserve',
       index: 0,
       category: 'Nature Parks',
+      img: 'https://www.nparks.gov.sg/-/media/nparks-real-content/gardens-parks-and-nature/parks-and-nature-reserve/bukit-timah-nature-reserve/btnr-media/btnr-visitor-centre.ashx',
     },
-    { question: 'MacRitchie Reservoir', index: 1 },
-    { question: 'Sungei Buloh Wetland Reserve', index: 2 },
-    { question: 'Labrador Nature Reserve', index: 3 },
-    { question: 'Pulau Ubin', index: 4 },
-    { question: 'Coney Island Park', index: 5 },
-    { question: 'Pasir Ris Park', index: 6 },
-    { question: 'East Coast Park', index: 7 },
-    { question: 'Kent Ridge Park', index: 8 },
-    { question: 'Fort Canning Park', index: 9 },
-    { question: 'dummy question', index: 10, counter: 0 },
+    {
+      question: 'MacRitchie Reservoir',
+      index: 1,
+      img: 'https://lp-cms-production.imgix.net/2019-06/a2aa48e66952bf8816898991072e32f5-macritchie-reservoir.jpg',
+    },
+    {
+      question: 'Sungei Buloh Wetland Reserve',
+      index: 2,
+      img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/79/27/9e/photo2jpg.jpg?w=1200&h=-1&s=1',
+    },
+    {
+      question: 'Labrador Nature Reserve',
+      index: 3,
+      img: 'https://www.visitsingapore.com/see-do-singapore/nature-wildlife/reserves/labrador-nature-reserve/jcr:content/par/mobile_21_content_sl/sliderccpar1/content_img_insta/content/item_1.thumbnail.image-path.560.315.jpg',
+    },
+    {
+      question: 'Pulau Ubin',
+      index: 4,
+      img: 'https://media.timeout.com/images/106041246/image.jpg',
+    },
+    {
+      question: 'Coney Island Park Singapore',
+      index: 5,
+      img: 'https://www.nparks.gov.sg/-/media/coney-island-1.ashx',
+    },
+    {
+      question: 'Pasir Ris Park',
+      index: 6,
+      img: 'https://www.nparks.gov.sg/-/media/nparks-real-content/gardens-parks-and-nature/parks-and-nature-reserve/pasir-ris-park/p3290233.ashx',
+    },
+    {
+      question: 'East Coast Park',
+      index: 7,
+      img: 'https://www.visitsingapore.com/content/dam/desktop/global/see-do-singapore/nature-wildlife/east-coast-park-carousel01-square.jpg',
+    },
+    {
+      question: 'Kent Ridge Park',
+      index: 8,
+      img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/39/e9/54/kent-ridge-park.jpg?w=1200&h=1200&s=1',
+    },
+    {
+      question: 'Fort Canning Park',
+      index: 9,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Fort_Canning_Park_sign%2C_Singapore_-_20110506.jpg',
+    },
+    { question: 'dummy question', index: 2, counter: 0 },
   ];
 
   const quizDataHistoricalLandmarks = [
-    { question: 'Raffles Hotel', index: 0, category: 'Historical Landmarks' },
-    { question: 'Old Hill Street Police Station Singapore', index: 1 },
-    { question: 'Former Ford Factory Singapore', index: 2 },
-    { question: 'Changi Chapel And Museum', index: 3 },
-    { question: 'Kranji War Memorial', index: 4 },
-    { question: 'Reflections At Bukit Chandu', index: 5 },
-    { question: 'Fort Canning Hill', index: 6 },
-    { question: 'Civilian War Memorial Singapore', index: 7 },
-    { question: 'Old Parliament House Singapore', index: 8 },
-    { question: 'The Fullerton Building', index: 9 },
-    { question: 'Victoria Theatre And Concert Hall', index: 10 },
+    {
+      question: 'Raffles Hotel',
+      index: 0,
+      category: 'Historical Landmarks',
+      img: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/260384694.jpg?k=266e84eda8e73591a5c4a7c25f29775ee304349a310eff011e93d3ec8f256d0b&o=&hp=1',
+    },
+    {
+      question: 'Old Hill Street Police Station Singapore',
+      index: 1,
+      img: 'https://cdn.myportfolio.com/645ef5b2f82fdeaf819364ecd9d55d6c/fdeb2ab3-9a92-434b-a146-eb8248455aaa_rw_1920.jpg?h=ec338e15212ca1ee517236e2b9139081',
+    },
+    {
+      question: 'Former Ford Factory Singapore',
+      index: 2,
+      img: 'https://www.visitsingapore.com/content/dam/desktop/global/see-do-singapore/history/former-ford-factory-carousel-940x940.jpg',
+    },
+    {
+      question: 'Changi Chapel And Museum',
+      index: 3,
+      img: 'https://www.visitsingapore.com/see-do-singapore/history/history-museums/changi-museum/jcr:content/par-carousel/carousel_detailpage/carousel/item0.thumbnail.carousel-img.600.338.jpg',
+    },
+    {
+      question: 'Kranji War Memorial',
+      index: 4,
+      img: 'https://www.visitsingapore.com/content/dam/desktop/global/see-do-singapore/history/kranji-war-memorial-carousel01-rect.jpeg',
+    },
+    {
+      question: 'Reflections At Bukit Chandu',
+      index: 5,
+      img: 'https://www.visitsingapore.com/content/dam/desktop/global/see-do-singapore/history/BAU_Shot-of-Reflections-at-Bukit-Chandu---Photo-credit-to-Reflections-at-Bukit-Chandu_Carousel-Image-1-1640x940.jpg',
+    },
+    {
+      question: 'Fort Canning Hill',
+      index: 6,
+      img: 'https://www.visitsingapore.com/see-do-singapore/nature-wildlife/parks-gardens/fort-canning-park/jcr:content/par/column_control/ccpar1/content_img_insta/content/item0.thumbnail.image-path.560.315.jpg',
+    },
+    {
+      question: 'Civilian War Memorial Singapore',
+      index: 7,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Civilian_War_Memorial_2019.jpg',
+    },
+    {
+      question: 'Old Parliament House Singapore',
+      index: 8,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Old_Parliament_House_3%2C_Singapore%2C_Feb_06.JPG/640px-Old_Parliament_House_3%2C_Singapore%2C_Feb_06.JPG',
+    },
+    {
+      question: 'The Fullerton Building',
+      index: 9,
+      img: 'https://www.executivetraveller.com/photos/view/size:1200,675/5b4d5e3b79204eba9e0e5871dd799463-Depositphotos_188606566_xl-2015%20(Large).jpg',
+    },
+    {
+      question: 'Victoria Theatre And Concert Hall',
+      index: 10,
+      img: 'https://www.visitsingapore.com/see-do-singapore/arts/performance-arts/victoria-theatre-concert-hall/jcr:content/par/column_control/ccpar1/content_img_insta/content/item_2.thumbnail.image-path.560.315.jpg',
+    },
     {
       question: 'City Hall And Old Supreme Court Building Singapore',
       index: 11,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Old_Supreme_Court_Building_and_City_Hall_from_the_Padang%2C_Singapore_-_20110205.jpg',
     },
-    { question: 'Battlebox At Fort Canning Singapore', index: 12 },
-    { question: 'Alkaff Mansion Singapore', index: 13 },
-    { question: 'Tiong Bahru Air Raid Shelter', index: 14 },
-    { question: 'Lim Bo Seng Memorial', index: 15 },
-    { question: 'Labrador Battery Singapore', index: 16 },
-    { question: 'Singapore Conference Hall', index: 17 },
-    { question: 'National Museum Of Singapore', index: 18 },
+    {
+      question: 'Battlebox At Fort Canning Singapore',
+      index: 12,
+      img: 'https://media.cntraveler.com/photos/5a8f31e6723a834885e152f5/16:9/w_2560,c_limit/Fort-Canning-Battlebox__2018_Battlebox-Entrance.jpg',
+    },
+    {
+      question: 'Alkaff Mansion Singapore',
+      index: 13,
+      img: 'https://cdn.tatlerasia.com/asiatatler/i/sg/2019/07/29134250-the-alkaff-mansion-exterior_cover_1600x1012.jpg',
+    },
+    {
+      question: 'Tiong Bahru Air Raid Shelter',
+      index: 14,
+      img: 'https://visittiongbahru.com/wp-content/uploads/2019/04/Visitors-touring-the-Tiong-Bahru-Air-Raid-Shelter-during-BSG-2017.jpg',
+    },
+    {
+      question: 'Lim Bo Seng Memorial',
+      index: 15,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/8/8b/Lim_Bo_Seng_Memorial_2%2C_Aug_06.JPG',
+    },
+    {
+      question: 'Labrador Battery Singapore',
+      index: 16,
+      img: 'https://thesmartlocal.com/wp-content/uploads/2023/11/labrador-battery-history.jpg',
+    },
+    {
+      question: 'Singapore Conference Hall',
+      index: 17,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Singapore_Conference_Hall.JPG/1200px-Singapore_Conference_Hall.JPG',
+    },
+    {
+      question: 'National Museum Of Singapore',
+      index: 18,
+      img: 'https://static.toiimg.com/photo/45067776.cms',
+    },
     { question: 'dummy question', index: 19, counter: 0 },
   ];
 
@@ -258,6 +378,43 @@ export default function QuizAI({ user }) {
     }
   };
 
+  const updateScoreInFirestore = async (uid, newScore) => {
+    const userDocRef = doc(db, 'users', uid);
+
+    // Checking if user document exists, otherwise make one
+    const userDocSnapshotExists = await getDoc(userDocRef);
+    console.log(userDocSnapshotExists.document);
+
+    if (!userDocSnapshotExists.document) {
+      await setDoc(userDocRef, {});
+    }
+
+    // After userDocRef is created, create scores collection
+    const scoresCollectionRef = collection(userDocRef, 'scores');
+
+    const scoresQuerySnapshot = await getDocs(scoresCollectionRef);
+    console.log(scoresQuerySnapshot.size, score);
+
+    if (scoresQuerySnapshot.size === 0) {
+      const newScoreDocRef = await addDoc(scoresCollectionRef, {
+        score: newScore,
+      });
+      console.log(newScoreDocRef.id);
+    } else if (scoresQuerySnapshot.size === 1) {
+      // console.log(scoresQuerySnapshot.docs[0]);
+      // console.log(scoresQuerySnapshot.docs[0].id);
+      // console.log(doc(scoresCollectionRef, scoresQuerySnapshot.docs[0].id));
+
+      const existingScoreDocRef = doc(
+        scoresCollectionRef,
+        scoresQuerySnapshot.docs[0].id,
+      );
+
+      await updateDoc(existingScoreDocRef, { score: newScore - 1 });
+    } else {
+    }
+  };
+
   const handleAnswerClick = async (selectedAnswer) => {
     if (selectedAnswer === answer && counter === 0) {
       // Increase counter by 1 so that user cannot click the same answer more than twice to increase score
@@ -265,6 +422,11 @@ export default function QuizAI({ user }) {
       setCounter(counter + 1);
       setSelectedAnswerCorrectness(true);
       setAnswerColor('green');
+
+      // // Updating the user's score in Firestore
+      // console.log(score);
+      // const uid = user.uid;
+      // updateScoreInFirestore(uid, score + 1);
     } else {
       setSelectedAnswerCorrectness(false);
       setAnswerColor('red');
@@ -272,8 +434,20 @@ export default function QuizAI({ user }) {
     setAnswerSelected(true);
   };
 
+  const handleAnswerClickFirestore = async (answer) => {
+    const uid = user.uid;
+
+    updateScoreInFirestore(uid, score + 1);
+  };
+
   const moveToNextQuestion = () => {
+    // // Updating the user's score in Firestore
+    console.log(score);
+    const uid = user.uid;
+    updateScoreInFirestore(uid, score + 1);
+
     setQuestion('');
+    setImage('');
     setOptions([]);
     setCounter(0);
     setSelectedAnswerCorrectness(null);
@@ -307,6 +481,8 @@ export default function QuizAI({ user }) {
     setIsResetting(true);
   };
 
+  console.log(answer, score);
+
   // const paddingValue = theme.breakpoints.up('md') ? '80px' : '10px';
 
   return (
@@ -319,6 +495,7 @@ export default function QuizAI({ user }) {
             <Box className="link-container">
               <AppLinks />
             </Box>
+            <Button onClick={handleAnswerClickFirestore}>Test Firestore</Button>
             <Box className="drawer-links">
               <ListItem>
                 <Link to="/">
