@@ -123,7 +123,7 @@ const politicalLandmarks = {
 
 function breakLines(response) {
   // Split the response into an array of strings
-  const lines = response.split("NEW");
+  const lines = response.split("TAG");
   // Join the array back into a string, with each element on a new line
   const formattedResponse = lines.join("\n");
 

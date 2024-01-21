@@ -90,7 +90,7 @@ export default function TemporaryDrawer({
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 500 }}
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 800 }}
       role="presentation"
       // onClick={toggleDrawer(anchor, false)}
       // onKeyDown={toggleDrawer(anchor, false)}
@@ -244,18 +244,21 @@ export default function TemporaryDrawer({
         <Box className="ai-response">
           <Typography
             variant="h4"
-            sx={{ fontFamily: "Comic Sans MS", color: "primary.main" }}
+            sx={{ fontFamily: "Roboto", color: "primary" }}
           >
             AI Response:
           </Typography>
-          <p>
+          <Typography
+            variant="h6"
+            sx={{ fontFamily: "Roboto", color: "primary" }}
+          >
             {aiResponse.split("\n").map((line, index) => (
               <React.Fragment key={index}>
                 {line}
                 <br />
               </React.Fragment>
             ))}
-          </p>
+          </Typography>
         </Box>
         <Box>
           <Button

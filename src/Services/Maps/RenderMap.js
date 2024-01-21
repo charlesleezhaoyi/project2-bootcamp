@@ -171,7 +171,7 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
         setSelectedPlace(res.data.results[0]);
         sendMessage(
           `You are a world class historian, who is as established as Associate Professor Joey Long, or Dr Masuda Hajimu, with expert knowledge on Singapore's every landmark and building, as well as its relevant historical developments. 
-          What is the name of this landmark with the following address:${res.data.results[0].formatted_address}. Use 3 different paragraphs and prepend each new paragraph with NEW, followed by sharing related historical events, and what developments occurred in the last 20 years in Singapore. Word limit is 200 words. Provide a break with the end of each paragraph`
+          What is the name of this landmark with the following address:${res.data.results[0].formatted_address}. Use 3 different paragraphs and prepend each new paragraph with TAG, followed by sharing related historical events, and what developments occurred in the last 20 years in Singapore. Word limit is 200 words. Provide a break with the end of each paragraph`
         );
       });
   }, []);
