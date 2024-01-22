@@ -1,54 +1,54 @@
 // Use this file in index.js as the root only as backup!
-import React from 'react';
-import RenderMap from '../Services/Maps/RenderMap';
-import { useState, useEffect } from 'react';
+import React from "react";
+import RenderMap from "../Services/Maps/RenderMap";
+import { useState, useEffect } from "react";
 // import "./App.css";
-import '../App.css';
-import AuthFormTesting from './AuthFormTesting';
-import SignIn from './SignIn';
-import { auth } from '../firebase';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import "../App.css";
+import AuthFormTesting from "./AuthFormTesting";
+import SignIn from "./SignIn";
+import { auth } from "../firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
-import { AppLinks } from '../AppMain';
+import { AppLinks } from "../AppMain";
 
 // MUI
-import { Box } from '@mui/material';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/system';
+import { Box } from "@mui/material";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import { styled } from "@mui/system";
 
-import TemporaryDrawer from './TemporaryDrawer';
+import TemporaryDrawer from "./TemporaryDrawer";
 
 // Styling MUI function
-const StyledContainer = styled('div')({
-  display: 'flex',
-  justifyContent: 'flex-start',
+const StyledContainer = styled("div")({
+  display: "flex",
+  justifyContent: "flex-start",
 });
 
 const StyledGridItem = styled(Grid)({
-  width: '30%',
+  width: "30%",
 });
 
-const StyledGridPills = styled('div')({
-  width: '150px', // Define the width of your container
-  height: '100px', // Define the height of your container
-  marginBottom: '30px',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-end',
-  marginRight: '20px',
-  marginLeft: '20px',
+const StyledGridPills = styled("div")({
+  width: "150px", // Define the width of your container
+  height: "100px", // Define the height of your container
+  marginBottom: "30px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-end",
+  marginRight: "20px",
+  marginLeft: "20px",
 });
 
 const linkStyle = {
-  marginRight: '50px',
-  marginLeft: '50px',
-  marginTop: '10px',
-  marginBottom: '10px',
-  textDecoration: 'none',
-  color: 'black',
-  fontWeight: 'bold',
-  fontSize: '30px',
+  marginRight: "50px",
+  marginLeft: "50px",
+  marginTop: "10px",
+  marginBottom: "10px",
+  textDecoration: "none",
+  color: "black",
+  fontWeight: "bold",
+  fontSize: "30px",
 };
 
 const historicalLandmarks = {
@@ -91,8 +91,8 @@ const politicalLandmarks = {
 };
 
 const AppBackground = () => {
-  const [userMessage, setUserMessage] = useState('');
-  const [aiResponse, setAiResponse] = useState('');
+  const [userMessage, setUserMessage] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedLandmarks, setSelectedLandmarks] =
     useState(historicalLandmarks);
@@ -100,6 +100,12 @@ const AppBackground = () => {
   const [user, setUser] = useState({});
 
   const [drawerRef, setDrawerRef] = useState(null);
+  const [directionSteps, setDirectionSteps] = useState({
+    id: null,
+    instruction: null,
+    distance: null,
+    duration: null,
+  });
 
   // Handling the drawer opening
   useEffect(() => {
@@ -131,33 +137,48 @@ const AppBackground = () => {
   //Function to call OpenAI API
   const sendMessage = async (targetMessage) => {
     try {
-      const messageToSend = userMessage === '' ? targetMessage : userMessage;
+      const messageToSend = userMessage === "" ? targetMessage : userMessage;
 
-      const response = await fetch('http://localhost:3002/send-message', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3002/send-message", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ message: messageToSend }),
       });
 
       const data = await response.json();
       setAiResponse(data.message);
-      setUserMessage('');
+      setUserMessage("");
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error("Error sending message:", error);
       // Handle error state here if needed
     }
   };
 
   const clearAIResponse = () => {
-    setAiResponse('');
+    setAiResponse("");
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     signOut(auth);
     setUser({});
+  };
+
+  const handleDirectionsResult = (steps) => {
+    // Slice the array from index 0 to 5
+    const slicedSteps = steps.slice(0, 5);
+    // Map the sliced array into discrete steps
+    const discreteSteps = slicedSteps.map((steps, index) => {
+      setDirectionSteps({
+        id: index,
+        instruction: steps.instructions,
+        distance: steps.distance.text,
+        duration: steps.duration.text,
+      });
+    });
+    console.log(`This is the ${discreteSteps}`);
   };
 
   return (
@@ -189,7 +210,7 @@ const AppBackground = () => {
                 signOut(auth);
                 setUser({});
               }}
-              sx={{ marginLeft: '20px' }}
+              sx={{ marginLeft: "20px" }}
             >
               Log out
             </Button>
@@ -200,10 +221,14 @@ const AppBackground = () => {
               onClick={() => {
                 // const message = "Singapore Flyer in 1 sentence";
                 setSelectedLandmarks(natureParks);
-                <RenderMap sendMessage={sendMessage} landmarks={natureParks} />;
+                <RenderMap
+                  sendMessage={sendMessage}
+                  landmarks={natureParks}
+                  onDirectionsResult={handleDirectionsResult}
+                />;
                 // sendMessage(message);
               }}
-              sx={{ width: '150px', height: '50px' }}
+              sx={{ width: "150px", height: "50px" }}
             >
               Nature Parks
             </Button>
@@ -217,10 +242,11 @@ const AppBackground = () => {
                 <RenderMap
                   sendMessage={sendMessage}
                   landmarks={politicalLandmarks}
+                  onDirectionsResult={handleDirectionsResult}
                 />;
                 // sendMessage(message);
               }}
-              sx={{ width: '150px', height: '50px' }}
+              sx={{ width: "150px", height: "50px" }}
             >
               Political Landmarks
             </Button>
@@ -234,10 +260,11 @@ const AppBackground = () => {
                 <RenderMap
                   sendMessage={sendMessage}
                   landmarks={historicalLandmarks}
+                  onDirectionsResult={handleDirectionsResult}
                 />;
                 // sendMessage(message);
               }}
-              sx={{ width: '150px', height: '50px' }}
+              sx={{ width: "150px", height: "50px" }}
             >
               Historical Landmarks
             </Button>
@@ -246,17 +273,21 @@ const AppBackground = () => {
       </Box>
 
       <StyledContainer>
-        <StyledGridItem item sx={{ margin: '20px' }}></StyledGridItem>
+        <StyledGridItem item sx={{ margin: "20px" }}></StyledGridItem>
         <StyledGridItem
           item
           style={{
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-            marginTop: '20px',
+            width: "100%",
+            height: "100%",
+            position: "relative",
+            marginTop: "20px",
           }}
         >
-          <RenderMap sendMessage={sendMessage} landmarks={selectedLandmarks} />
+          <RenderMap
+            sendMessage={sendMessage}
+            landmarks={selectedLandmarks}
+            onDirectionsResult={handleDirectionsResult}
+          />
         </StyledGridItem>
       </StyledContainer>
     </Box>

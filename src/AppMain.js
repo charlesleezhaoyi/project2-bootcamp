@@ -16,7 +16,7 @@ import { Box } from '@mui/material';
 import SignInPage from './SignInPage';
 import GuidePage from './Components/GuidePage';
 import Protected from './Components/Protected';
-import Onboarding from './Components/OnboardingForm';
+
 import { useNavigate } from 'react-router-dom';
 import ErrorOpenAI from './Components/ErrorOpenAI';
 
@@ -30,9 +30,9 @@ const linkStyle = {
   textDecoration: 'none',
   color: 'black',
   fontWeight: 'bold',
-  fontSize: '30px',
-
-  // flexDirection: 'column',
+  fontSize: '25px',
+  display: 'flex',
+  fontFamily: 'Roboto, sans-serif', // Add the desired font family here
 };
 
 // A separate component to render Links
@@ -200,7 +200,6 @@ const AppMain = () => {
             </Protected>
           }
         />
-        <Route path="/onboarding" element={<Onboarding />} />
         {isLoggedIn ? (
           <>
             {/* <Route path="/quizzes" element={<Quiz user={user} />} />

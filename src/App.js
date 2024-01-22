@@ -3,14 +3,12 @@ import React from 'react';
 import RenderMap from '../src/Services/Maps/RenderMap';
 import { useState, useEffect } from 'react';
 import './App.css';
-import AuthFormTesting from './Components/AuthFormTesting';
 import { auth } from './firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import AppBackground from './Components/BackgroundApp';
 import SignIn from './Components/SignIn';
 
 import { AppLinks } from './AppMain';
-import CertificateGenerator from './Services/CreateCertificate';
 
 // MUI
 import {
@@ -124,17 +122,32 @@ const politicalLandmarks = {
   RafflesPlace: { lat: 1.283, lng: 103.851 },
 };
 
-const App = ({ handleLogoutAppMain }) => {
+function breakLines(response) {
+  // Split the response into an array of strings
+  const lines = response.split('TAG');
+  // Join the array back into a string, with each element on a new line
+  const formattedResponse = lines.join('\n');
+
+  return formattedResponse;
+}
+
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isOnboarded, setIsOnboarded] = useState(false);
+
   const [userMessage, setUserMessage] = useState('');
   const [aiResponse, setAiResponse] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedLandmarks, setSelectedLandmarks] =
     useState(historicalLandmarks);
+  const [directionSteps, setDirectionSteps] = useState({
+    id: null,
+    instruction: null,
+    distance: null,
+    duration: null,
+  });
 
   const [user, setUser] = useState({});
-
   const [drawerRef, setDrawerRef] = useState(null);
-
   const [loading, setLoading] = useState(false);
 
   const [errorStatus, setErrorStatus] = useState(false);
@@ -174,6 +187,19 @@ const App = ({ handleLogoutAppMain }) => {
     });
   };
 
+  const handleLogout = async () => {
+    try {
+      console.log('Logging out...');
+      await signOut(auth);
+      console.log('User signed out');
+      setUser({});
+      setIsLoggedIn(false);
+      console.log('Navigation complete');
+    } catch (err) {
+      console.error('Error signing out', err);
+    }
+  };
+
   //Function to call OpenAI API
   const sendMessage = async (targetMessage) => {
     setLoading(true);
@@ -199,7 +225,9 @@ const App = ({ handleLogoutAppMain }) => {
       }
 
       const data = await response.json();
-      setAiResponse(data.message);
+      const formattedResponse = await breakLines(data.message);
+      console.log(formattedResponse);
+      setAiResponse(formattedResponse);
       setUserMessage('');
 
       // console.log(data.message);
@@ -218,181 +246,173 @@ const App = ({ handleLogoutAppMain }) => {
     setAiResponse('');
   };
 
-  const handleLogout = async () => {
-    try {
-      console.log('Logging out...');
-      await logoutUser();
-      console.log('User signed out');
-      setUser({});
-      navigate('/sign-in');
+  const handleDirectionsResult = (steps) => {
+    // Slice the array from index 0 to 5
+    const slicedSteps = steps.slice(0, 5);
+    // Map the sliced array into discrete steps
+    const discreteSteps = slicedSteps.map((step, index) => ({
+      id: index,
+      instruction: step.instructions,
+      distance: step.distance.text,
+      duration: step.duration.text,
+    }));
 
-      console.log('Navigation complete');
-    } catch (err) {
-      console.error('Error signing out', err);
+    for (let i = 0; i < discreteSteps.length; i++) {
+      console.log(discreteSteps[i].instruction);
     }
-  };
-
-  const logoutUser = async () => {
-    await signOut(auth);
-    return setIsLoggedIn(false);
+    setDirectionSteps(discreteSteps);
   };
 
   return (
     <Box className="app-container">
-      {errorStatus ? (
-        <ErrorOpenAI />
-      ) : loading ? (
-        <Box>
+      {/* <Box> */}
+      <Box>
+        {isLoggedIn ? (
+          <Box
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginBottom: '20px',
+            }}
+          >
+            <TemporaryDrawer
+              aiResponse={aiResponse}
+              clearAIResponse={clearAIResponse}
+              onDrawerOpen={(func) => setDrawerRef(func)}
+              sendMessage={sendMessage}
+              handleAuthStateChanged={handleAuthStateChanged}
+              isLoggedIn={isLoggedIn}
+              handleLogout={handleLogout}
+              loading={loading}
+              historicalLandmarks={historicalLandmarks}
+              natureParks={natureParks}
+              politicalLandmarks={politicalLandmarks}
+              setSelectedLandmarks={setSelectedLandmarks}
+              renderMapComponent={
+                <RenderMap
+                  sendMessage={sendMessage}
+                  landmarks={historicalLandmarks}
+                  onDirectionsResult={handleDirectionsResult}
+                />
+              }
+            />
+            <Typography
+              variant="h5"
+              style={{ whiteSpace: 'nowrap', margin: '0' }}
+            >
+              Merlion Landmarks
+            </Typography>
+            <Box className="link-container">
+              <AppLinks />
+            </Box>
+          </Box>
+        ) : (
           <AppBackground />
-          <FetchingDataAnimation />
-        </Box>
-      ) : (
-        <Box>
-          <Box>
-            {isLoggedIn ? (
-              <div className="google__map">
-                <Box
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginBottom: '20px',
-                    margin: 0,
-                  }}
-                >
-                  <TemporaryDrawer
-                    aiResponse={aiResponse}
-                    clearAIResponse={clearAIResponse}
-                    onDrawerOpen={(func) => setDrawerRef(func)}
-                    sendMessage={sendMessage}
-                    handleAuthStateChanged={handleAuthStateChanged}
-                    isLoggedIn={isLoggedIn}
-                    handleLogout={handleLogout}
-                    loading={loading}
-                    historicalLandmarks={historicalLandmarks}
-                    natureParks={natureParks}
-                    politicalLandmarks={politicalLandmarks}
-                    setSelectedLandmarks={setSelectedLandmarks}
-                    renderMapComponent={
-                      <RenderMap
-                        sendMessage={sendMessage}
-                        landmarks={historicalLandmarks}
-                      />
-                    }
-                  />
-                  <Typography
-                    variant="h5"
-                    style={{
-                      whiteSpace: 'nowrap',
-                      margin: '0',
-                      fontFamily: 'cursive',
-                    }}
-                  >
-                    Merlion Landmarks
-                  </Typography>
-                  <Box className="app-link-container">
-                    <AppLinks />
-                  </Box>
-                </Box>
-              </div>
-            ) : (
-              <AppBackground />
-            )}
+        )}
 
-            {isLoggedIn && (
-              <StyledContainer>
-                <StyledGridItem item>
-                  <h2 className="pills-landmarks">Welcome back {user.email}</h2>
+        {isLoggedIn && (
+          <StyledContainer>
+            <StyledGridItem item>
+              {/* <h2>Welcome back {user.email}</h2> */}
+              {/* <AppLinks /> */}
 
-                  {/* <Button
-                    variant="outlined"
-                    onClick={(e) => {
-                      setIsLoggedIn(false);
-                      signOut(auth);
-                      setUser({});
-                    }}
-                    sx={{ marginLeft: '20px' }}
-                  >
-                    Log out
-                  </Button> */}
-                </StyledGridItem>
-                <StyledGridItem item sx={{ margin: '20px' }}>
-                  <Box
-                    sx={{
-                      '& .MuiTextField-root': { m: 1, width: '25ch' },
-                    }}
-                  ></Box>
-                </StyledGridItem>
-                <StyledGridItem
-                  item
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    position: 'relative', // Make this a positioning context
-                    marginTop: '0px',
-                  }}
-                >
-                  <div className="google__map">
+              {/* <Button
+                variant="outlined"
+                onClick={(e) => {
+                  setIsLoggedIn(false);
+                  signOut(auth);
+                  setUser({});
+                }}
+                sx={{ marginLeft: "20px" }}
+              >
+                Log out
+              </Button> */}
+            </StyledGridItem>
+            <StyledGridItem item sx={{ margin: '20px' }}>
+              <Box
+                sx={{
+                  '& .MuiTextField-root': { m: 1, width: '25ch' },
+                }}
+              ></Box>
+            </StyledGridItem>
+            <StyledGridItem
+              item
+              style={{
+                width: '100%',
+                height: '100%',
+                position: 'relative', // Make this a positioning context
+                marginTop: '0px',
+              }}
+            >
+              <RenderMap
+                sendMessage={sendMessage}
+                landmarks={selectedLandmarks}
+                onDirectionsResult={handleDirectionsResult}
+              />
+              <StyledGridPills
+                item
+                style={{ position: 'absolute', top: -40, left: 560 }}
+              >
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    setSelectedLandmarks(natureParks);
                     <RenderMap
                       sendMessage={sendMessage}
-                      landmarks={selectedLandmarks}
-                    />
-                    <Box className="pills-landmarks">
-                      <StyledGridPills
-                        item
-                        style={{ position: 'absolute', top: -40, left: 560 }}
-                      >
-                        <Button
-                          variant="contained"
-                          onClick={() => {
-                            setSelectedLandmarks(natureParks);
-                          }}
-                          sx={{ width: '150px', height: '50px', zIndex: '100' }}
-                        >
-                          Nature Parks
-                        </Button>
-                      </StyledGridPills>
-                      <StyledGridPills
-                        item
-                        style={{ position: 'absolute', top: -40, left: 380 }}
-                      >
-                        <Button
-                          variant="contained"
-                          onClick={() => {
-                            setSelectedLandmarks(politicalLandmarks);
-                          }}
-                          sx={{ width: '150px', height: '50px', zIndex: '100' }}
-                        >
-                          Political Landmarks
-                        </Button>
-                      </StyledGridPills>
-                      <StyledGridPills
-                        item
-                        style={{ position: 'absolute', top: -40, left: 200 }}
-                      >
-                        <Button
-                          variant="contained"
-                          onClick={() => {
-                            setSelectedLandmarks(historicalLandmarks);
-                          }}
-                          sx={{ width: '150px', height: '50px', zIndex: '100' }}
-                        >
-                          Historical Landmarks
-                        </Button>
-                      </StyledGridPills>
-                    </Box>
-                  </div>
-                </StyledGridItem>
-              </StyledContainer>
-            )}
-          </Box>
+                      landmarks={natureParks}
+                    />;
+                  }}
+                  sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                >
+                  Nature Parks
+                </Button>
+              </StyledGridPills>
+              <StyledGridPills
+                item
+                style={{ position: 'absolute', top: -40, left: 380 }}
+              >
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    setSelectedLandmarks(politicalLandmarks);
+                    <RenderMap
+                      sendMessage={sendMessage}
+                      landmarks={politicalLandmarks}
+                    />;
+                  }}
+                  sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                >
+                  Political Landmarks
+                </Button>
+              </StyledGridPills>
+              <StyledGridPills
+                item
+                style={{ position: 'absolute', top: -40, left: 200 }}
+              >
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    setSelectedLandmarks(historicalLandmarks);
+                  }}
+                  sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                >
+                  Historical Landmarks
+                </Button>
+              </StyledGridPills>
+            </StyledGridItem>
+          </StyledContainer>
+        )}
+      </Box>
 
-          {!isLoggedIn && (
-            <Box className="overlay">
-              <SignIn />
-            </Box>
-          )}
+      {!isLoggedIn && (
+        <Box className="overlay">
+          <SignIn />
         </Box>
       )}
+      {/* </Box> */}
     </Box>
   );
 };

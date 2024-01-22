@@ -23,6 +23,7 @@ body,
   .link-container,
   .pills-landmarks {
     display: none;
+    font-family: "Roboto";
   }
 
   .google__map {
