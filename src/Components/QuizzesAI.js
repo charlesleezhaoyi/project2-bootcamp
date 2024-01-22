@@ -30,6 +30,8 @@ import {
 import { useTheme } from '@mui/material/styles';
 
 import ErrorOpenAI from './ErrorOpenAI';
+import generateCertificate from '../Services/CreateCertificate';
+import { update } from 'firebase/database';
 
 const parseOpenAIResponse = (responseString) => {
   const lines = responseString.split('\n');
@@ -415,6 +417,26 @@ export default function QuizAI({ user }) {
     }
   };
 
+  const addFieldToUserInFirestore = async () => {
+    const uid = user.uid;
+    const userDocRef = doc(db, 'users', uid);
+
+    console.log(userDocRef);
+    console.log(uid);
+
+    const fieldToUpdate = 'course';
+    const value = quizCategory;
+    console.log(quizCategory);
+
+    try {
+      await updateDoc(userDocRef, {
+        [fieldToUpdate]: value,
+      });
+    } catch (err) {
+      console.error('Error adding field: ', err);
+    }
+  };
+
   const handleAnswerClick = async (selectedAnswer) => {
     if (selectedAnswer === answer && counter === 0) {
       // Increase counter by 1 so that user cannot click the same answer more than twice to increase score
@@ -482,6 +504,7 @@ export default function QuizAI({ user }) {
   };
 
   console.log(answer, score);
+  console.log('User id is: ', user.uid);
 
   // const paddingValue = theme.breakpoints.up('md') ? '80px' : '10px';
 
@@ -684,6 +707,9 @@ export default function QuizAI({ user }) {
           <Typography variant="h5">Your score: {score}</Typography>
         </Box>
       )}
+      <Button onClick={addFieldToUserInFirestore}>
+        Add Field User course to Firestore
+      </Button>
     </Box>
   );
 }
