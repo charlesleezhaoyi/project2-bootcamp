@@ -251,72 +251,72 @@ export default function QuizAI({ user }) {
       index: 1,
       img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Istana_%28Singapore%29.jpg/1200px-Istana_%28Singapore%29.jpg',
     },
-    {
-      question: 'Supreme Court Singapore',
-      index: 2,
-      img: 'https://arquitecturaviva.com/assets/uploads/obras/39971/av_imagen_vertical.webp?h=efd58982',
-    },
-    {
-      question: 'City Hall Singapore',
-      index: 3,
-      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/City_Hall_4%2C_Singapore%2C_Jan_06.JPG/1200px-City_Hall_4%2C_Singapore%2C_Jan_06.JPG',
-    },
-    {
-      question: 'National Gallery Singapore',
-      index: 4,
-      img: 'https://media.cntraveler.com/photos/5730aaf14b5c247421e0b51b/master/pass/08-museums-national-gallery-singapore-cr-courtesy.jpg',
-    },
-    {
-      question: 'Civilian War Memorial Singapore',
-      index: 5,
-      img: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Civilian_War_Memorial_2019.jpg',
-    },
-    {
-      question: 'Old Parliament House Singapore',
-      index: 6,
-      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/20190819_The_Arts_House-1.jpg/1200px-20190819_The_Arts_House-1.jpg',
-    },
-    {
-      question: 'Victoria Theatre Concert Hall Singapore',
-      index: 7,
-      img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/6a/01/67/victoria-theatre-and.jpg?w=1200&h=-1&s=1',
-    },
-    {
-      question: 'Asian Civilisations Museum Singapore',
-      index: 8,
-      img: 'https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_2500,h_1600,f_auto/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/zhz5njqqv9ys57enmd3a/AsianCivilisationsMuseumTicketinSingapore-KlookAustralia.jpg',
-    },
-    {
-      question: 'National Museum of Singapore',
-      index: 9,
-      img: 'https://mediaim.expedia.com/destination/9/aeeab16d1fdf41e6202a491266b52d8d.jpg',
-    },
-    {
-      question: 'The Padang',
-      index: 10,
-      img: 'https://cdn.tatlerasia.com/tatlerasia/i/2022/08/08173413-padang_cover_1500x1000.jpg',
-    },
-    {
-      question: 'Fort Canning Hill Singapore',
-      index: 11,
-      img: 'https://static.honeykidsasia.com/wp-content/uploads/2021/04/fort-canning-park-singapore-guide-honeykids-asia-900x643.jpg',
-    },
-    {
-      question: 'The Fullerton Building Singapore',
-      index: 12,
-      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/2016_Singapur%2C_Downtown_Core%2C_Hotel_Fullerton_%2801%29.jpg/1200px-2016_Singapur%2C_Downtown_Core%2C_Hotel_Fullerton_%2801%29.jpg',
-    },
-    {
-      question: 'Singapore Conference Hall',
-      index: 13,
-      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Singapore_Conference_Hall.JPG/1200px-Singapore_Conference_Hall.JPG',
-    },
-    {
-      question: 'Raffles Place Singapore',
-      index: 14,
-      img: 'https://a.cdn-hotels.com/gdcs/production156/d1955/6d67865b-01b6-4f5a-8fef-a38b822d0cdb.jpg',
-    },
-    { question: 'dummy question', index: 15, counter: 0 },
+    // {
+    //   question: 'Supreme Court Singapore',
+    //   index: 2,
+    //   img: 'https://arquitecturaviva.com/assets/uploads/obras/39971/av_imagen_vertical.webp?h=efd58982',
+    // },
+    // {
+    //   question: 'City Hall Singapore',
+    //   index: 3,
+    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/City_Hall_4%2C_Singapore%2C_Jan_06.JPG/1200px-City_Hall_4%2C_Singapore%2C_Jan_06.JPG',
+    // },
+    // {
+    //   question: 'National Gallery Singapore',
+    //   index: 4,
+    //   img: 'https://media.cntraveler.com/photos/5730aaf14b5c247421e0b51b/master/pass/08-museums-national-gallery-singapore-cr-courtesy.jpg',
+    // },
+    // {
+    //   question: 'Civilian War Memorial Singapore',
+    //   index: 5,
+    //   img: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Civilian_War_Memorial_2019.jpg',
+    // },
+    // {
+    //   question: 'Old Parliament House Singapore',
+    //   index: 6,
+    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/20190819_The_Arts_House-1.jpg/1200px-20190819_The_Arts_House-1.jpg',
+    // },
+    // {
+    //   question: 'Victoria Theatre Concert Hall Singapore',
+    //   index: 7,
+    //   img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/6a/01/67/victoria-theatre-and.jpg?w=1200&h=-1&s=1',
+    // },
+    // {
+    //   question: 'Asian Civilisations Museum Singapore',
+    //   index: 8,
+    //   img: 'https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_2500,h_1600,f_auto/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/zhz5njqqv9ys57enmd3a/AsianCivilisationsMuseumTicketinSingapore-KlookAustralia.jpg',
+    // },
+    // {
+    //   question: 'National Museum of Singapore',
+    //   index: 9,
+    //   img: 'https://mediaim.expedia.com/destination/9/aeeab16d1fdf41e6202a491266b52d8d.jpg',
+    // },
+    // {
+    //   question: 'The Padang',
+    //   index: 10,
+    //   img: 'https://cdn.tatlerasia.com/tatlerasia/i/2022/08/08173413-padang_cover_1500x1000.jpg',
+    // },
+    // {
+    //   question: 'Fort Canning Hill Singapore',
+    //   index: 11,
+    //   img: 'https://static.honeykidsasia.com/wp-content/uploads/2021/04/fort-canning-park-singapore-guide-honeykids-asia-900x643.jpg',
+    // },
+    // {
+    //   question: 'The Fullerton Building Singapore',
+    //   index: 12,
+    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/2016_Singapur%2C_Downtown_Core%2C_Hotel_Fullerton_%2801%29.jpg/1200px-2016_Singapur%2C_Downtown_Core%2C_Hotel_Fullerton_%2801%29.jpg',
+    // },
+    // {
+    //   question: 'Singapore Conference Hall',
+    //   index: 13,
+    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Singapore_Conference_Hall.JPG/1200px-Singapore_Conference_Hall.JPG',
+    // },
+    // {
+    //   question: 'Raffles Place Singapore',
+    //   index: 14,
+    //   img: 'https://a.cdn-hotels.com/gdcs/production156/d1955/6d67865b-01b6-4f5a-8fef-a38b822d0cdb.jpg',
+    // },
+    { question: 'dummy question', index: 2, counter: 0 },
   ];
 
   // Reset loading state when a new image is set
@@ -398,18 +398,16 @@ export default function QuizAI({ user }) {
     console.log(scoresQuerySnapshot.size, score);
 
     if (scoresQuerySnapshot.size === 0) {
+      // Add a new document with current score if there is no collection in scores
       const newScoreDocRef = await addDoc(scoresCollectionRef, {
         score: newScore,
       });
       console.log(newScoreDocRef.id);
     } else if (scoresQuerySnapshot.size === 1) {
-      // console.log(scoresQuerySnapshot.docs[0]);
-      // console.log(scoresQuerySnapshot.docs[0].id);
-      // console.log(doc(scoresCollectionRef, scoresQuerySnapshot.docs[0].id));
-
+      // Update the existing score document in the scores collection if there is already a score doc
       const existingScoreDocRef = doc(
         scoresCollectionRef,
-        scoresQuerySnapshot.docs[0].id,
+        scoresQuerySnapshot.docs[0].id, // takes the first element's id of the docs array
       );
 
       await updateDoc(existingScoreDocRef, { score: newScore - 1 });
@@ -417,20 +415,24 @@ export default function QuizAI({ user }) {
     }
   };
 
-  const addFieldToUserInFirestore = async () => {
+  const addCourseFieldToFireStore = async () => {
     const uid = user.uid;
     const userDocRef = doc(db, 'users', uid);
 
     console.log(userDocRef);
     console.log(uid);
 
-    const fieldToUpdate = 'course';
-    const value = quizCategory;
+    const emailField = 'email';
+    const valueEmail = user.email;
+
+    const courseField = 'course';
+    const valueCourse = quizCategory;
     console.log(quizCategory);
 
     try {
       await updateDoc(userDocRef, {
-        [fieldToUpdate]: value,
+        [emailField]: valueEmail,
+        [courseField]: valueCourse,
       });
     } catch (err) {
       console.error('Error adding field: ', err);
@@ -444,11 +446,6 @@ export default function QuizAI({ user }) {
       setCounter(counter + 1);
       setSelectedAnswerCorrectness(true);
       setAnswerColor('green');
-
-      // // Updating the user's score in Firestore
-      // console.log(score);
-      // const uid = user.uid;
-      // updateScoreInFirestore(uid, score + 1);
     } else {
       setSelectedAnswerCorrectness(false);
       setAnswerColor('red');
@@ -504,7 +501,7 @@ export default function QuizAI({ user }) {
   };
 
   console.log(answer, score);
-  console.log('User id is: ', user.uid);
+  console.log(user.email, quizCategory, score);
 
   // const paddingValue = theme.breakpoints.up('md') ? '80px' : '10px';
 
@@ -704,11 +701,24 @@ export default function QuizAI({ user }) {
           indexOfQuestion >= quizDataPoliticalLandmarks.length - 2 ? (
             <Button onClick={resetQuiz}>Reset Political Landmarks Quiz</Button>
           ) : null}
+          {quizCategory === 'Political Landmarks' &&
+          indexOfQuestion >= quizDataPoliticalLandmarks.length - 2 ? (
+            <Button onClick={addCourseFieldToFireStore}>
+              Add your info to our database!
+            </Button>
+          ) : null}
           <Typography variant="h5">Your score: {score}</Typography>
         </Box>
       )}
-      <Button onClick={addFieldToUserInFirestore}>
+      {/* <Button onClick={addCourseFieldToFireStore}>
         Add Field User course to Firestore
+      </Button> */}
+      <Button
+        onClick={() => {
+          generateCertificate(user.email, quizCategory, score.toString());
+        }}
+      >
+        Generate your certificate
       </Button>
     </Box>
   );
