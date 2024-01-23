@@ -126,7 +126,9 @@ export default function SignIn() {
         <CssBaseline />
         <Card
           sx={{
+            borderRadius: "5%",
             width: 500,
+            p: 3,
           }}
         >
           <Box
@@ -137,7 +139,7 @@ export default function SignIn() {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <Avatar sx={{ m: 1 }}>
               <LockOutlinedIcon />
             </Avatar>
             {!newUser ? (
@@ -222,6 +224,7 @@ export default function SignIn() {
                   type="submit"
                   fullWidth
                   variant="contained"
+                  color="error"
                   sx={{ mt: 3, mb: 2 }}
                   onClick={signIn}
                 >
@@ -235,6 +238,7 @@ export default function SignIn() {
                   type="submit"
                   fullWidth
                   variant="contained"
+                  color="error"
                   sx={{ mt: 1, mb: 1 }}
                   onClick={signUp}
                 >
