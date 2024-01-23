@@ -175,14 +175,7 @@ const AppMain = () => {
             </Protected>
           }
         />
-        <Route
-          path="/quizzes"
-          element={
-            <Protected isLoggedIn={isLoggedIn}>
-              <Quiz user={user} />
-            </Protected>
-          }
-        />
+
         <Route path="/sign-in" element={<SignInPage />} />
         <Route
           path="/guide"
@@ -200,20 +193,6 @@ const AppMain = () => {
             </Protected>
           }
         />
-        {isLoggedIn ? (
-          <>
-            {/* <Route path="/quizzes" element={<Quiz user={user} />} />
-            <Route path="/map" element={<App />} /> */}
-            {/* <Route path="/quizzesAI" element={<QuizAI user={user} />} /> */}
-            {/* <Route path="/guide" element={<GuidePage />} /> */}
-          </>
-        ) : (
-          <>
-            {/* <Route path="/quizzes" element={<AuthFormTesting />} />
-            <Route path="/sign-in" element={<SignInPage />} />
-            <Route path="/map" element={<SignInPage />} /> */}
-          </>
-        )}
       </Routes>
     </Router>
   );
