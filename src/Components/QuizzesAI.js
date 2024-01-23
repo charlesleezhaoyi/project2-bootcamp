@@ -78,6 +78,8 @@ export default function QuizAI({ user }) {
 
   const [isResetting, setIsResetting] = useState(false);
 
+  const [fullName, setFullName] = useState('');
+
   // MUI Theme
   const theme = useTheme();
 
@@ -251,11 +253,11 @@ export default function QuizAI({ user }) {
       index: 1,
       img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Istana_%28Singapore%29.jpg/1200px-Istana_%28Singapore%29.jpg',
     },
-    // {
-    //   question: 'Supreme Court Singapore',
-    //   index: 2,
-    //   img: 'https://arquitecturaviva.com/assets/uploads/obras/39971/av_imagen_vertical.webp?h=efd58982',
-    // },
+    {
+      question: 'Supreme Court Singapore',
+      index: 2,
+      img: 'https://arquitecturaviva.com/assets/uploads/obras/39971/av_imagen_vertical.webp?h=efd58982',
+    },
     // {
     //   question: 'City Hall Singapore',
     //   index: 3,
@@ -316,7 +318,7 @@ export default function QuizAI({ user }) {
     //   index: 14,
     //   img: 'https://a.cdn-hotels.com/gdcs/production156/d1955/6d67865b-01b6-4f5a-8fef-a38b822d0cdb.jpg',
     // },
-    { question: 'dummy question', index: 2, counter: 0 },
+    { question: 'dummy question', index: 3, counter: 0 },
   ];
 
   // Reset loading state when a new image is set
@@ -380,16 +382,34 @@ export default function QuizAI({ user }) {
     }
   };
 
+  const getUserData = async () => {
+    try {
+      const userDocRef = doc(db, 'users', user.uid);
+
+      const userDocSnapshot = await getDoc(userDocRef);
+
+      console.log(userDocSnapshot);
+      console.log(userDocSnapshot.data().name);
+
+      setFullName(userDocSnapshot.data().name);
+    } catch (error) {
+      console.error('Error getting user data: ', error);
+    }
+  };
+
+  getUserData();
+
   const updateScoreInFirestore = async (uid, newScore) => {
     const userDocRef = doc(db, 'users', uid);
+    console.log(userDocRef);
 
     // Checking if user document exists, otherwise make one
     const userDocSnapshotExists = await getDoc(userDocRef);
     console.log(userDocSnapshotExists.document);
 
-    if (!userDocSnapshotExists.document) {
-      await setDoc(userDocRef, {});
-    }
+    // if (!userDocSnapshotExists.document) {
+    //   await setDoc(userDocRef, {});
+    // }
 
     // After userDocRef is created, create scores collection
     const scoresCollectionRef = collection(userDocRef, 'scores');
@@ -460,11 +480,6 @@ export default function QuizAI({ user }) {
   };
 
   const moveToNextQuestion = () => {
-    // // Updating the user's score in Firestore
-    console.log(score);
-    const uid = user.uid;
-    updateScoreInFirestore(uid, score + 1);
-
     setQuestion('');
     setImage('');
     setOptions([]);
@@ -490,6 +505,7 @@ export default function QuizAI({ user }) {
 
   const resetQuiz = () => {
     setQuestion('');
+    setQuizCategory('');
     setOptions([]);
     setIndexOfQuestion(0);
     setAnswer('');
@@ -501,7 +517,8 @@ export default function QuizAI({ user }) {
   };
 
   console.log(answer, score);
-  console.log(user.email, quizCategory, score);
+  console.log(fullName, quizCategory, score);
+  console.log(user.uid);
 
   // const paddingValue = theme.breakpoints.up('md') ? '80px' : '10px';
 
@@ -515,7 +532,7 @@ export default function QuizAI({ user }) {
             <Box className="link-container">
               <AppLinks />
             </Box>
-            <Button onClick={handleAnswerClickFirestore}>Test Firestore</Button>
+            {/* <Button onClick={handleAnswerClickFirestore}>Test Firestore</Button> */}
             <Box className="drawer-links">
               <ListItem>
                 <Link to="/">
@@ -529,34 +546,51 @@ export default function QuizAI({ user }) {
               </ListItem>
             </Box>
           </Box>
-          <Button onClick={() => getQuizFromOpenAI(quizDataNatureParks[0])}>
-            Start Quiz on Nature Parks!
-          </Button>
-          <Button
-            onClick={() => getQuizFromOpenAI(quizDataHistoricalLandmarks[0])}
-          >
-            Start Quiz on Historical Landmarks!
-          </Button>
-          <Button
-            onClick={() => getQuizFromOpenAI(quizDataPoliticalLandmarks[0])}
-          >
-            Start Quiz on Political Landmarks!
-          </Button>
+          {quizCategory !== '' ? null : (
+            <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+              <Button
+                sx={{ margin: '20px' }}
+                variant="contained"
+                color="error"
+                onClick={() => getQuizFromOpenAI(quizDataNatureParks[0])}
+              >
+                Start Quiz on Nature Parks!
+              </Button>
+              <Button
+                sx={{ margin: '20px' }}
+                variant="contained"
+                color="error"
+                onClick={() =>
+                  getQuizFromOpenAI(quizDataHistoricalLandmarks[0])
+                }
+              >
+                Start Quiz on Historical Landmarks!
+              </Button>
+              <Button
+                sx={{ margin: '20px' }}
+                variant="contained"
+                color="error"
+                onClick={() => getQuizFromOpenAI(quizDataPoliticalLandmarks[0])}
+              >
+                Start Quiz on Political Landmarks!
+              </Button>
+            </Box>
+          )}
 
           {question ? (
-            <Typography
-              variant="h4"
+            <Box
               sx={{
                 width: '900px',
                 marginBottom: '20px',
-                marginTop: '25px',
+                marginTop: '55px',
+                margin: '0 auto',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              Question: {question}
-            </Typography>
+              <Typography variant="h4">Question: {question}</Typography>
+            </Box>
           ) : null}
           {image ? (
             <Box
@@ -677,49 +711,126 @@ export default function QuizAI({ user }) {
           {question &&
           indexOfQuestion < quizDataHistoricalLandmarks.length - 2 &&
           quizCategory === 'Historical Landmarks' ? (
-            <Button onClick={moveToNextQuestion}>Move to next question</Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={moveToNextQuestion}
+            >
+              Move to next question
+            </Button>
           ) : null}
           {question &&
           indexOfQuestion < quizDataNatureParks.length - 2 &&
           quizCategory === 'Nature Parks' ? (
-            <Button onClick={moveToNextQuestion}>Move to next question</Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={moveToNextQuestion}
+            >
+              Move to next question
+            </Button>
           ) : null}
           {question &&
           indexOfQuestion < quizDataPoliticalLandmarks.length - 2 &&
           quizCategory === 'Political Landmarks' ? (
-            <Button onClick={moveToNextQuestion}>Move to next question</Button>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ margin: '30px' }}
+              onClick={moveToNextQuestion}
+            >
+              Move to next question
+            </Button>
           ) : null}
           {quizCategory === 'Nature Parks' &&
           indexOfQuestion >= quizDataNatureParks.length - 2 ? (
-            <Button onClick={resetQuiz}>Reset Nature Parks Quiz</Button>
+            <>
+              <Button variant="contained" color="error" onClick={resetQuiz}>
+                Finish Nature Parks Quiz
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  updateScoreInFirestore(user.uid, score + 1);
+                  generateCertificate(fullName, quizCategory, score.toString());
+                }}
+              >
+                Generate your certificate!
+              </Button>
+            </>
           ) : null}
           {quizCategory === 'Historical Landmarks' &&
           indexOfQuestion >= quizDataHistoricalLandmarks.length - 2 ? (
-            <Button onClick={resetQuiz}>Reset Historical Landmarks Quiz</Button>
+            <>
+              <Button variant="contained" color="error" onClick={resetQuiz}>
+                Finish Historical Landmarks Quiz
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  console.log(fullName);
+                  updateScoreInFirestore(user.uid, score + 1);
+                  generateCertificate(fullName, quizCategory, score.toString());
+                }}
+              >
+                Generate your certificate!
+              </Button>
+            </>
           ) : null}
           {quizCategory === 'Political Landmarks' &&
           indexOfQuestion >= quizDataPoliticalLandmarks.length - 2 ? (
-            <Button onClick={resetQuiz}>Reset Political Landmarks Quiz</Button>
+            <>
+              <Button
+                sx={{ marginLeft: '30px' }}
+                variant="contained"
+                color="error"
+                onClick={resetQuiz}
+              >
+                Finish Political Landmarks Quiz
+              </Button>
+              <Button
+                sx={{ margin: '30px' }}
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  updateScoreInFirestore(user.uid, score + 1);
+                  generateCertificate(fullName, quizCategory, score.toString());
+                }}
+              >
+                Generate your certificate!
+              </Button>
+            </>
           ) : null}
-          {quizCategory === 'Political Landmarks' &&
-          indexOfQuestion >= quizDataPoliticalLandmarks.length - 2 ? (
-            <Button onClick={addCourseFieldToFireStore}>
-              Add your info to our database!
-            </Button>
-          ) : null}
-          <Typography variant="h5">Your score: {score}</Typography>
+
+          {quizCategory === '' ? null : (
+            <Typography
+              sx={{ marginLeft: '30px', marginBottom: '30px' }}
+              variant="h5"
+            >
+              Your score: {score}
+            </Typography>
+          )}
         </Box>
       )}
-      {/* <Button onClick={addCourseFieldToFireStore}>
-        Add Field User course to Firestore
-      </Button> */}
-      <Button
-        onClick={() => {
-          generateCertificate(user.email, quizCategory, score.toString());
-        }}
-      >
-        Generate your certificate
-      </Button>
+      {/* {quizCategory !== '' ? null : (
+        <Typography sx={{ marginLeft: '20px' }} variant="h5">
+          Your score: {score}
+        </Typography>
+      )} */}
+
+      {/* {quizCategory === 'Political Landmarks' &&
+      indexOfQuestion >= quizDataPoliticalLandmarks.length - 2 ? (
+        <Button
+          onClick={() => {
+            updateScoreInFirestore(user.uid, score + 1);
+            generateCertificate(user.email, quizCategory, score.toString());
+          }}
+        >
+          Generate your certificate!
+        </Button>
+      ) : null} */}
     </Box>
   );
 }

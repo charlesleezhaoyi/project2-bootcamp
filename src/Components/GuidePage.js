@@ -333,13 +333,13 @@ const GuidePage = () => {
         >
           <Button
             className="slider__btn slider__btn--left"
-            sx={{ fontSize: '2.25rem' }}
+            sx={{ fontSize: '2.25rem', color: 'maroon' }}
           >
             &larr;
           </Button>
           <Button
             className="slider__btn slider__btn--right"
-            sx={{ fontSize: '2.25rem' }}
+            sx={{ fontSize: '2.25rem', color: 'maroon' }}
           >
             &rarr;
           </Button>

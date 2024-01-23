@@ -28,7 +28,7 @@ const linkStyle = {
   marginTop: '10px',
   marginBottom: '10px',
   textDecoration: 'none',
-  color: 'black',
+  color: 'maroon',
   fontWeight: 'bold',
   fontSize: '25px',
   display: 'flex',
@@ -44,15 +44,13 @@ const AppLinks = () => (
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          justifyContent: 'space-between',
+          // justifyContent: 'space-around',
         }}
       >
         <Link to="/" style={linkStyle}>
           Map
         </Link>
-        <Link to="/quizzes" style={linkStyle}>
-          Quizzes
-        </Link>
+
         <Link to="/quizzesAI" style={linkStyle}>
           Quizzes AI
         </Link>

@@ -272,6 +272,7 @@ const App = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'space-between',
               marginBottom: '20px',
             }}
           >
@@ -296,13 +297,24 @@ const App = () => {
                 />
               }
             />
+            <img
+              style={{ marginRight: '20px', marginTop: '5px' }}
+              src="data:image/png;base64,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"
+              alt="Merlion"
+            />
             <Typography
               variant="h5"
-              style={{ whiteSpace: 'nowrap', margin: '0' }}
+              style={{
+                whiteSpace: 'nowrap',
+                margin: '0',
+                color: 'maroon',
+                fontWeight: 'bold',
+                fontSize: '25px',
+              }}
             >
               Merlion Landmarks
             </Typography>
-            <Box className="link-container">
+            <Box className="link-container" style={{ marginLeft: 'auto' }}>
               <AppLinks />
             </Box>
           </Box>
