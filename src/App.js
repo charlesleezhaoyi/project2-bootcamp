@@ -324,22 +324,6 @@ const App = () => {
 
         {isLoggedIn && (
           <StyledContainer>
-            <StyledGridItem item>
-              {/* <h2>Welcome back {user.email}</h2> */}
-              {/* <AppLinks /> */}
-
-              {/* <Button
-                variant="outlined"
-                onClick={(e) => {
-                  setIsLoggedIn(false);
-                  signOut(auth);
-                  setUser({});
-                }}
-                sx={{ marginLeft: "20px" }}
-              >
-                Log out
-              </Button> */}
-            </StyledGridItem>
             <StyledGridItem item sx={{ margin: '20px' }}>
               <Box
                 sx={{

@@ -31,6 +31,7 @@ import { useTheme } from '@mui/material/styles';
 
 import ErrorOpenAI from './ErrorOpenAI';
 import generateCertificate from '../Services/CreateCertificate';
+import CountdownTimer from './CountdownTimer';
 import { update } from 'firebase/database';
 
 const parseOpenAIResponse = (responseString) => {
@@ -137,7 +138,32 @@ export default function QuizAI({ user }) {
       index: 9,
       img: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Fort_Canning_Park_sign%2C_Singapore_-_20110506.jpg',
     },
-    { question: 'dummy question', index: 2, counter: 0 },
+    {
+      question: 'Singapore HortPark',
+      index: 10,
+      img: 'https://static.thehoneycombers.com/wp-content/uploads/sites/2/2023/09/hiking-trekking-in-singapore-henderson-waves-view.png',
+    },
+    {
+      question: 'Upper Seletar Reservoir Park',
+      index: 11,
+      img: 'https://www.justrunlah.com/wp-content/uploads/2016/01/upper-seletar_thumb.jpg',
+    },
+    {
+      question: 'Singapore Mount Faber Park',
+      index: 12,
+      img: 'https://www.visitsingapore.com/content/dam/desktop/global/see-do-singapore/nature-wildlife/mount-faber-carouse01-1670x940.jpg',
+    },
+    {
+      question: 'Sembawang Park Singapore',
+      index: 13,
+      img: 'https://thesmartlocal.com/wp-content/uploads/2021/03/image9-10.jpg',
+    },
+    {
+      question: 'Singapore Botanic Gardens',
+      index: 14,
+      img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/7f/e5/ce/beautiful-botanic-gardens.jpg?w=1200&h=-1&s=1',
+    },
+    { question: 'dummy question', index: 15, counter: 0 },
   ];
 
   const quizDataHistoricalLandmarks = [
@@ -217,27 +243,27 @@ export default function QuizAI({ user }) {
       index: 14,
       img: 'https://visittiongbahru.com/wp-content/uploads/2019/04/Visitors-touring-the-Tiong-Bahru-Air-Raid-Shelter-during-BSG-2017.jpg',
     },
-    {
-      question: 'Lim Bo Seng Memorial',
-      index: 15,
-      img: 'https://upload.wikimedia.org/wikipedia/commons/8/8b/Lim_Bo_Seng_Memorial_2%2C_Aug_06.JPG',
-    },
-    {
-      question: 'Labrador Battery Singapore',
-      index: 16,
-      img: 'https://thesmartlocal.com/wp-content/uploads/2023/11/labrador-battery-history.jpg',
-    },
-    {
-      question: 'Singapore Conference Hall',
-      index: 17,
-      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Singapore_Conference_Hall.JPG/1200px-Singapore_Conference_Hall.JPG',
-    },
-    {
-      question: 'National Museum Of Singapore',
-      index: 18,
-      img: 'https://static.toiimg.com/photo/45067776.cms',
-    },
-    { question: 'dummy question', index: 19, counter: 0 },
+    // {
+    //   question: 'Lim Bo Seng Memorial',
+    //   index: 15,
+    //   img: 'https://upload.wikimedia.org/wikipedia/commons/8/8b/Lim_Bo_Seng_Memorial_2%2C_Aug_06.JPG',
+    // },
+    // {
+    //   question: 'Labrador Battery Singapore',
+    //   index: 16,
+    //   img: 'https://thesmartlocal.com/wp-content/uploads/2023/11/labrador-battery-history.jpg',
+    // },
+    // {
+    //   question: 'Singapore Conference Hall',
+    //   index: 17,
+    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Singapore_Conference_Hall.JPG/1200px-Singapore_Conference_Hall.JPG',
+    // },
+    // {
+    //   question: 'National Museum Of Singapore',
+    //   index: 18,
+    //   img: 'https://static.toiimg.com/photo/45067776.cms',
+    // },
+    { question: 'dummy question', index: 15, counter: 0 },
   ];
 
   const quizDataPoliticalLandmarks = [
@@ -245,29 +271,28 @@ export default function QuizAI({ user }) {
       question: 'Parliament House Singapore',
       index: 0,
       category: 'Political Landmarks',
-      // testing imgs
       img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Parliament_House_Singapore.jpg/800px-Parliament_House_Singapore.jpg',
     },
-    // {
-    //   question: 'Istana',
-    //   index: 1,
-    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Istana_%28Singapore%29.jpg/1200px-Istana_%28Singapore%29.jpg',
-    // },
-    // {
-    //   question: 'Supreme Court Singapore',
-    //   index: 2,
-    //   img: 'https://arquitecturaviva.com/assets/uploads/obras/39971/av_imagen_vertical.webp?h=efd58982',
-    // },
-    // {
-    //   question: 'City Hall Singapore',
-    //   index: 3,
-    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/City_Hall_4%2C_Singapore%2C_Jan_06.JPG/1200px-City_Hall_4%2C_Singapore%2C_Jan_06.JPG',
-    // },
-    // {
-    //   question: 'National Gallery Singapore',
-    //   index: 4,
-    //   img: 'https://media.cntraveler.com/photos/5730aaf14b5c247421e0b51b/master/pass/08-museums-national-gallery-singapore-cr-courtesy.jpg',
-    // },
+    {
+      question: 'Istana',
+      index: 1,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Istana_%28Singapore%29.jpg/1200px-Istana_%28Singapore%29.jpg',
+    },
+    {
+      question: 'Supreme Court Singapore',
+      index: 2,
+      img: 'https://arquitecturaviva.com/assets/uploads/obras/39971/av_imagen_vertical.webp?h=efd58982',
+    },
+    {
+      question: 'City Hall Singapore',
+      index: 3,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/City_Hall_4%2C_Singapore%2C_Jan_06.JPG/1200px-City_Hall_4%2C_Singapore%2C_Jan_06.JPG',
+    },
+    {
+      question: 'National Gallery Singapore',
+      index: 4,
+      img: 'https://media.cntraveler.com/photos/5730aaf14b5c247421e0b51b/master/pass/08-museums-national-gallery-singapore-cr-courtesy.jpg',
+    },
     // {
     //   question: 'Civilian War Memorial Singapore',
     //   index: 5,
@@ -318,7 +343,7 @@ export default function QuizAI({ user }) {
     //   index: 14,
     //   img: 'https://a.cdn-hotels.com/gdcs/production156/d1955/6d67865b-01b6-4f5a-8fef-a38b822d0cdb.jpg',
     // },
-    { question: 'dummy question', index: 1, counter: 0 },
+    { question: 'dummy question', index: 5, counter: 0 },
   ];
 
   // Reset loading state when a new image is set
@@ -388,8 +413,8 @@ export default function QuizAI({ user }) {
 
       const userDocSnapshot = await getDoc(userDocRef);
 
-      console.log(userDocSnapshot);
-      console.log(userDocSnapshot.data().name);
+      // console.log(userDocSnapshot);
+      // console.log(userDocSnapshot.data().name);
 
       setFullName(userDocSnapshot.data().name);
     } catch (error) {
@@ -435,29 +460,29 @@ export default function QuizAI({ user }) {
     }
   };
 
-  const addCourseFieldToFireStore = async () => {
-    const uid = user.uid;
-    const userDocRef = doc(db, 'users', uid);
+  // const addCourseFieldToFireStore = async () => {
+  //   const uid = user.uid;
+  //   const userDocRef = doc(db, 'users', uid);
 
-    console.log(userDocRef);
-    console.log(uid);
+  //   console.log(userDocRef);
+  //   console.log(uid);
 
-    const emailField = 'email';
-    const valueEmail = user.email;
+  //   const emailField = 'email';
+  //   const valueEmail = user.email;
 
-    const courseField = 'course';
-    const valueCourse = quizCategory;
-    console.log(quizCategory);
+  //   const courseField = 'course';
+  //   const valueCourse = quizCategory;
+  //   console.log(quizCategory);
 
-    try {
-      await updateDoc(userDocRef, {
-        [emailField]: valueEmail,
-        [courseField]: valueCourse,
-      });
-    } catch (err) {
-      console.error('Error adding field: ', err);
-    }
-  };
+  //   try {
+  //     await updateDoc(userDocRef, {
+  //       [emailField]: valueEmail,
+  //       [courseField]: valueCourse,
+  //     });
+  //   } catch (err) {
+  //     console.error('Error adding field: ', err);
+  //   }
+  // };
 
   const handleAnswerClick = async (selectedAnswer) => {
     if (selectedAnswer === answer && counter === 0) {
@@ -471,12 +496,6 @@ export default function QuizAI({ user }) {
       setAnswerColor('red');
     }
     setAnswerSelected(true);
-  };
-
-  const handleAnswerClickFirestore = async (answer) => {
-    const uid = user.uid;
-
-    updateScoreInFirestore(uid, score + 1);
   };
 
   const moveToNextQuestion = () => {
@@ -516,9 +535,8 @@ export default function QuizAI({ user }) {
     setIsResetting(true);
   };
 
-  console.log(answer, score);
-  console.log(fullName, quizCategory, score);
-  console.log(user.uid);
+  console.log(answer);
+  console.log(indexOfQuestion, quizDataPoliticalLandmarks.length);
 
   // const paddingValue = theme.breakpoints.up('md') ? '80px' : '10px';
 
@@ -611,6 +629,8 @@ export default function QuizAI({ user }) {
                   height: '450px',
                   width: '450px',
                   borderRadius: '7%',
+                  marginBottom: '20px',
+                  marginTop: '20px',
                   opacity: imageLoading ? 0 : 1,
                   transition: 'opacity 0.3s ease-in-out',
                 }}
@@ -678,6 +698,7 @@ export default function QuizAI({ user }) {
                               width: '100%',
                               height: '180px',
                               borderRadius: '12%',
+                              marginBottom: '20px',
                               // marginLeft: paddingValue,
                               // marginRight: paddingValue,
                               backgroundColor: isCorrect
@@ -716,134 +737,155 @@ export default function QuizAI({ user }) {
               ) : null}
             </Box>
           )}
-          {question &&
-          indexOfQuestion < quizDataHistoricalLandmarks.length - 2 &&
-          quizCategory === 'Historical Landmarks' ? (
-            <Button
-              variant="contained"
-              color="error"
-              onClick={moveToNextQuestion}
-            >
-              Move to next question
-            </Button>
-          ) : null}
-          {question &&
-          indexOfQuestion < quizDataNatureParks.length - 2 &&
-          quizCategory === 'Nature Parks' ? (
-            <Button
-              variant="contained"
-              color="error"
-              onClick={moveToNextQuestion}
-            >
-              Move to next question
-            </Button>
-          ) : null}
-          {question &&
-          indexOfQuestion < quizDataPoliticalLandmarks.length - 2 &&
-          quizCategory === 'Political Landmarks' ? (
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ margin: '30px' }}
-              onClick={moveToNextQuestion}
-            >
-              Move to next question
-            </Button>
-          ) : null}
-          {quizCategory === 'Nature Parks' &&
-          indexOfQuestion >= quizDataNatureParks.length - 2 ? (
-            <>
-              <Button variant="contained" color="error" onClick={resetQuiz}>
-                Finish Nature Parks Quiz
-              </Button>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            {question &&
+            indexOfQuestion < quizDataHistoricalLandmarks.length - 2 &&
+            quizCategory === 'Historical Landmarks' ? (
               <Button
                 variant="contained"
                 color="error"
-                onClick={() => {
-                  updateScoreInFirestore(user.uid, score + 1);
-                  generateCertificate(fullName, quizCategory, score.toString());
-                }}
+                onClick={moveToNextQuestion}
               >
-                Generate your certificate!
+                Move to next question
               </Button>
-            </>
-          ) : null}
-          {quizCategory === 'Historical Landmarks' &&
-          indexOfQuestion >= quizDataHistoricalLandmarks.length - 2 ? (
-            <>
-              <Button variant="contained" color="error" onClick={resetQuiz}>
-                Finish Historical Landmarks Quiz
-              </Button>
+            ) : null}
+            {question &&
+            indexOfQuestion < quizDataNatureParks.length - 2 &&
+            quizCategory === 'Nature Parks' ? (
               <Button
                 variant="contained"
                 color="error"
-                onClick={() => {
-                  console.log(fullName);
-                  updateScoreInFirestore(user.uid, score + 1);
-                  generateCertificate(fullName, quizCategory, score.toString());
-                }}
+                onClick={moveToNextQuestion}
               >
-                Generate your certificate!
+                Move to next question
               </Button>
-            </>
-          ) : null}
-          {quizCategory === 'Political Landmarks' &&
-          indexOfQuestion >= quizDataPoliticalLandmarks.length - 2 ? (
-            <>
+            ) : null}
+            {question &&
+            indexOfQuestion < quizDataPoliticalLandmarks.length - 2 &&
+            quizCategory === 'Political Landmarks' ? (
               <Button
-                sx={{ marginLeft: '30px' }}
                 variant="contained"
                 color="error"
-                onClick={resetQuiz}
-              >
-                Finish Political Landmarks Quiz
-              </Button>
-              <Button
                 sx={{ margin: '30px' }}
-                variant="contained"
-                color="error"
-                onClick={() => {
-                  updateScoreInFirestore(user.uid, score + 1);
-                  generateCertificate(fullName, quizCategory, score.toString());
-                }}
+                onClick={moveToNextQuestion}
               >
-                Generate your certificate!
+                Move to next question
               </Button>
-            </>
-          ) : null}
+            ) : null}
 
-          {quizCategory === '' ? null : (
-            <Typography
-              sx={{
-                marginLeft: '30px',
-                marginBottom: '30px',
-                color: 'maroon',
-                fontWeight: 'bold',
-              }}
-              variant="h5"
-            >
-              Your score: {score}
-            </Typography>
-          )}
+            {quizCategory === 'Nature Parks' &&
+            indexOfQuestion >= quizDataNatureParks.length - 2 ? (
+              <>
+                <Button variant="contained" color="error" onClick={resetQuiz}>
+                  Finish Nature Parks Quiz
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    updateScoreInFirestore(user.uid, score + 1);
+                    generateCertificate(
+                      fullName,
+                      quizCategory,
+                      score.toString(),
+                    );
+                  }}
+                >
+                  Generate your certificate!
+                </Button>
+              </>
+            ) : null}
+            {quizCategory === 'Historical Landmarks' &&
+            indexOfQuestion >= quizDataHistoricalLandmarks.length - 2 ? (
+              <>
+                <Button variant="contained" color="error" onClick={resetQuiz}>
+                  Finish Historical Landmarks Quiz
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    console.log(fullName);
+                    updateScoreInFirestore(user.uid, score + 1);
+                    generateCertificate(
+                      fullName,
+                      quizCategory,
+                      score.toString(),
+                    );
+                  }}
+                >
+                  Generate your certificate!
+                </Button>
+              </>
+            ) : null}
+            {quizCategory === 'Political Landmarks' &&
+            indexOfQuestion >= quizDataPoliticalLandmarks.length - 2 ? (
+              <>
+                <Button
+                  sx={{ marginLeft: '30px' }}
+                  variant="contained"
+                  color="error"
+                  onClick={resetQuiz}
+                >
+                  Finish Political Landmarks Quiz
+                </Button>
+                <Button
+                  sx={{ margin: '30px' }}
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    updateScoreInFirestore(user.uid, score + 1);
+                    generateCertificate(
+                      fullName,
+                      quizCategory,
+                      score.toString(),
+                    );
+                  }}
+                >
+                  Generate your certificate!
+                </Button>
+              </>
+            ) : null}
+
+            {/* Countdown Timer */}
+            {loading ||
+            quizCategory === '' ||
+            indexOfQuestion === quizDataPoliticalLandmarks.length - 2 ? null : (
+              <CountdownTimer
+                initialTime={30}
+                moveToNextQuestion={moveToNextQuestion}
+                indexOfQuestion={indexOfQuestion}
+                quizDataPoliticalLandmarks={quizDataPoliticalLandmarks}
+                resetQuiz={resetQuiz}
+              />
+            )}
+
+            {quizCategory === '' || loading ? null : (
+              <Typography
+                sx={{
+                  marginLeft: '30px',
+                  marginRight: '30px',
+                  marginBottom: '30px',
+                  color: 'maroon',
+                  fontWeight: 'bold',
+                }}
+                variant="h5"
+              >
+                Your score: {score}
+              </Typography>
+            )}
+          </Box>
         </Box>
       )}
-      {/* {quizCategory !== '' ? null : (
-        <Typography sx={{ marginLeft: '20px' }} variant="h5">
-          Your score: {score}
-        </Typography>
-      )} */}
-
-      {/* {quizCategory === 'Political Landmarks' &&
-      indexOfQuestion >= quizDataPoliticalLandmarks.length - 2 ? (
-        <Button
-          onClick={() => {
-            updateScoreInFirestore(user.uid, score + 1);
-            generateCertificate(user.email, quizCategory, score.toString());
-          }}
-        >
-          Generate your certificate!
-        </Button>
-      ) : null} */}
     </Box>
   );
 }
+
+// indexOfQuestion < quizDataHistoricalLandmarks.length - 2;

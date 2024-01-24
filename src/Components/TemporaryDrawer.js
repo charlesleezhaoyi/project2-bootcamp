@@ -25,6 +25,12 @@ import { Link } from 'react-router-dom';
 
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
+import { treadmill } from 'ldrs';
+import { dotWave } from 'ldrs';
+
+dotWave.register();
+
+treadmill.register();
 
 const linksData = ['', 'quizzes', 'quizzesAI', 'onboarding', 'guide'];
 
@@ -165,67 +171,15 @@ export default function TemporaryDrawer({
             </IconButton>
           </ListItemIcon>
         </List>
-        {/* <List>
-          {['Singapore Flyer', 'Sentosa Island', 'Chinatown Singapore'].map(
-            (text, index) => (
-              <ListItemButton key={text}>
-                <ListItemIcon>
-                  {text === 'Singapore Flyer' ? (
-                    <IconButton
-                      variant="contained"
-                      onClick={() => {
-                        const message =
-                          "Singapore Flyer's history in 1 sentence";
-                        sendMessage(message);
-                      }}
-                      sx={{ width: '50%', marginBottom: '20px' }}
-                    >
-                      <AttractionsIcon />
-                    </IconButton>
-                  ) : text === 'Sentosa Island' ? (
-                    <IconButton
-                      variant="contained"
-                      onClick={() => {
-                        const message =
-                          "Sentosa Island's history in 1 sentence";
-                        sendMessage(message);
-                      }}
-                      sx={{ width: '50%', marginBottom: '20px' }}
-                    >
-                      <SailingIcon />
-                    </IconButton>
-                  ) : text === 'Chinatown Singapore' ? (
-                    <IconButton
-                      variant="contained"
-                      onClick={() => {
-                        const message =
-                          "Chinatown Singapore's history in 1 sentence";
-                        sendMessage(message);
-                      }}
-                      sx={{ width: '50%', marginBottom: '20px' }}
-                    >
-                      <TakeoutDiningIcon />
-                    </IconButton>
-                  ) : null}
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  onClick={() => {
-                    const message = `${text}'s history in 1 sentence`;
-                    sendMessage(message);
-                  }}
-                />
-              </ListItemButton>
-            ),
-          )}
-        </List> */}
       </List>
-      <Divider />
+      <Divider sx={{ marginBottom: '20px' }} />
       <Box sx={{ marginLeft: '10px' }}>
         <TextField
           type="text"
           value={userMessage}
+          sx={{ width: '230px' }}
           onChange={(e) => setUserMessage(e.target.value)}
+          placeholder="Talk to our GPT 3.5 AI here!"
         />
         <Button
           variant="contained"
@@ -234,31 +188,46 @@ export default function TemporaryDrawer({
           onClick={() => {
             sendMessage(userMessage);
           }}
-          sx={{ mt: '20px', mb: '20px' }}
+          sx={{ mt: '10px', mb: '10px', marginLeft: '20px' }}
         >
           Send Message
         </Button>
       </Box>
-      <Divider />
+      <Divider sx={{ marginTop: '20px', marginBottom: '20px' }} />
       <Box sx={{ marginLeft: '10px' }}>
         <Box className="ai-response">
           <Typography
             variant="h4"
-            sx={{ fontFamily: 'Roboto', color: 'primary' }}
+            sx={{
+              fontFamily: 'Roboto',
+              color: 'maroon',
+              fontWeight: 'bold',
+              marginBottom: '10px',
+            }}
           >
-            AI Response:
+            GPT Response:
           </Typography>
-          <Typography
-            variant="h6"
-            sx={{ fontFamily: 'Roboto', color: 'primary' }}
-          >
-            {aiResponse.split('\n').map((line, index) => (
-              <React.Fragment key={index}>
-                {line}
-                <br />
-              </React.Fragment>
-            ))}
-          </Typography>
+          {loading ? ( // Default values shown
+            // Default values shown
+            <l-dot-wave
+              sx={{ marginLeft: '20px' }}
+              size="47"
+              speed="1"
+              color="maroon"
+            ></l-dot-wave>
+          ) : (
+            <Typography
+              variant="h6"
+              sx={{ fontFamily: 'Roboto', color: 'primary' }}
+            >
+              {aiResponse.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
+            </Typography>
+          )}
         </Box>
         <Box>
           <Button
@@ -284,6 +253,8 @@ export default function TemporaryDrawer({
       </Box>
     </Box>
   );
+
+  console.log(loading);
 
   return (
     <div>

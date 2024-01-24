@@ -52,7 +52,7 @@ const AppLinks = () => (
         </Link>
 
         <Link to="/quizzesAI" style={linkStyle}>
-          Quizzes AI
+          Quizzes
         </Link>
         <Link to="/guide" style={linkStyle}>
           User Guide
