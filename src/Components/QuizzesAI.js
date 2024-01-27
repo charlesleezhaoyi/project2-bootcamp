@@ -293,58 +293,58 @@ export default function QuizAI({ user }) {
       index: 4,
       img: 'https://media.cntraveler.com/photos/5730aaf14b5c247421e0b51b/master/pass/08-museums-national-gallery-singapore-cr-courtesy.jpg',
     },
-    // {
-    //   question: 'Civilian War Memorial Singapore',
-    //   index: 5,
-    //   img: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Civilian_War_Memorial_2019.jpg',
-    // },
-    // {
-    //   question: 'Old Parliament House Singapore',
-    //   index: 6,
-    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/20190819_The_Arts_House-1.jpg/1200px-20190819_The_Arts_House-1.jpg',
-    // },
-    // {
-    //   question: 'Victoria Theatre Concert Hall Singapore',
-    //   index: 7,
-    //   img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/6a/01/67/victoria-theatre-and.jpg?w=1200&h=-1&s=1',
-    // },
-    // {
-    //   question: 'Asian Civilisations Museum Singapore',
-    //   index: 8,
-    //   img: 'https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_2500,h_1600,f_auto/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/zhz5njqqv9ys57enmd3a/AsianCivilisationsMuseumTicketinSingapore-KlookAustralia.jpg',
-    // },
-    // {
-    //   question: 'National Museum of Singapore',
-    //   index: 9,
-    //   img: 'https://mediaim.expedia.com/destination/9/aeeab16d1fdf41e6202a491266b52d8d.jpg',
-    // },
-    // {
-    //   question: 'The Padang',
-    //   index: 10,
-    //   img: 'https://cdn.tatlerasia.com/tatlerasia/i/2022/08/08173413-padang_cover_1500x1000.jpg',
-    // },
-    // {
-    //   question: 'Fort Canning Hill Singapore',
-    //   index: 11,
-    //   img: 'https://static.honeykidsasia.com/wp-content/uploads/2021/04/fort-canning-park-singapore-guide-honeykids-asia-900x643.jpg',
-    // },
-    // {
-    //   question: 'The Fullerton Building Singapore',
-    //   index: 12,
-    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/2016_Singapur%2C_Downtown_Core%2C_Hotel_Fullerton_%2801%29.jpg/1200px-2016_Singapur%2C_Downtown_Core%2C_Hotel_Fullerton_%2801%29.jpg',
-    // },
-    // {
-    //   question: 'Singapore Conference Hall',
-    //   index: 13,
-    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Singapore_Conference_Hall.JPG/1200px-Singapore_Conference_Hall.JPG',
-    // },
-    // {
-    //   question: 'Raffles Place Singapore',
-    //   index: 14,
-    //   img: 'https://a.cdn-hotels.com/gdcs/production156/d1955/6d67865b-01b6-4f5a-8fef-a38b822d0cdb.jpg',
-    // },
+    {
+      question: 'Civilian War Memorial Singapore',
+      index: 5,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Civilian_War_Memorial_2019.jpg',
+    },
+    {
+      question: 'Old Parliament House Singapore',
+      index: 6,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/20190819_The_Arts_House-1.jpg/1200px-20190819_The_Arts_House-1.jpg',
+    },
+    {
+      question: 'Victoria Theatre Concert Hall Singapore',
+      index: 7,
+      img: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/6a/01/67/victoria-theatre-and.jpg?w=1200&h=-1&s=1',
+    },
+    {
+      question: 'Asian Civilisations Museum Singapore',
+      index: 8,
+      img: 'https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_2500,h_1600,f_auto/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/zhz5njqqv9ys57enmd3a/AsianCivilisationsMuseumTicketinSingapore-KlookAustralia.jpg',
+    },
+    {
+      question: 'National Museum of Singapore',
+      index: 9,
+      img: 'https://mediaim.expedia.com/destination/9/aeeab16d1fdf41e6202a491266b52d8d.jpg',
+    },
+    {
+      question: 'The Padang',
+      index: 10,
+      img: 'https://cdn.tatlerasia.com/tatlerasia/i/2022/08/08173413-padang_cover_1500x1000.jpg',
+    },
+    {
+      question: 'Fort Canning Hill Singapore',
+      index: 11,
+      img: 'https://static.honeykidsasia.com/wp-content/uploads/2021/04/fort-canning-park-singapore-guide-honeykids-asia-900x643.jpg',
+    },
+    {
+      question: 'The Fullerton Building Singapore',
+      index: 12,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/2016_Singapur%2C_Downtown_Core%2C_Hotel_Fullerton_%2801%29.jpg/1200px-2016_Singapur%2C_Downtown_Core%2C_Hotel_Fullerton_%2801%29.jpg',
+    },
+    {
+      question: 'Singapore Conference Hall',
+      index: 13,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Singapore_Conference_Hall.JPG/1200px-Singapore_Conference_Hall.JPG',
+    },
+    {
+      question: 'Raffles Place Singapore',
+      index: 14,
+      img: 'https://a.cdn-hotels.com/gdcs/production156/d1955/6d67865b-01b6-4f5a-8fef-a38b822d0cdb.jpg',
+    },
 
-    { question: 'dummy question', index: 5, counter: 0 },
+    { question: 'dummy question', index: 15, counter: 0 },
   ];
 
   // Reset loading state when a new image is set

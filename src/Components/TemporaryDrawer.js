@@ -27,6 +27,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { treadmill } from 'ldrs';
 import { dotWave } from 'ldrs';
+import Timeline from './Timeline';
 
 dotWave.register();
 
@@ -106,6 +107,7 @@ export default function TemporaryDrawer({
       // onKeyDown={toggleDrawer(anchor, false)}
     >
       <Divider />
+      <Timeline />
       <Divider />
       <Box sx={{ marginLeft: '10px' }}>
         <Box className="ai-response">
@@ -128,7 +130,7 @@ export default function TemporaryDrawer({
           </Typography>
         </Box>
         <Box>
-          <Button
+          {/* <Button
             variant="contained"
             color="error"
             onClick={(e) => {
@@ -138,7 +140,7 @@ export default function TemporaryDrawer({
             sx={{ mt: '20px', mb: '20px' }}
           >
             Logout
-          </Button>
+          </Button> */}
         </Box>
         <IconButton
           variant="outlined"
