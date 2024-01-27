@@ -278,21 +278,21 @@ export default function QuizAI({ user }) {
       index: 1,
       img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Istana_%28Singapore%29.jpg/1200px-Istana_%28Singapore%29.jpg',
     },
-    // {
-    //   question: 'Supreme Court Singapore',
-    //   index: 2,
-    //   img: 'https://arquitecturaviva.com/assets/uploads/obras/39971/av_imagen_vertical.webp?h=efd58982',
-    // },
-    // {
-    //   question: 'City Hall Singapore',
-    //   index: 3,
-    //   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/City_Hall_4%2C_Singapore%2C_Jan_06.JPG/1200px-City_Hall_4%2C_Singapore%2C_Jan_06.JPG',
-    // },
-    // {
-    //   question: 'National Gallery Singapore',
-    //   index: 4,
-    //   img: 'https://media.cntraveler.com/photos/5730aaf14b5c247421e0b51b/master/pass/08-museums-national-gallery-singapore-cr-courtesy.jpg',
-    // },
+    {
+      question: 'Supreme Court Singapore',
+      index: 2,
+      img: 'https://arquitecturaviva.com/assets/uploads/obras/39971/av_imagen_vertical.webp?h=efd58982',
+    },
+    {
+      question: 'City Hall Singapore',
+      index: 3,
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/City_Hall_4%2C_Singapore%2C_Jan_06.JPG/1200px-City_Hall_4%2C_Singapore%2C_Jan_06.JPG',
+    },
+    {
+      question: 'National Gallery Singapore',
+      index: 4,
+      img: 'https://media.cntraveler.com/photos/5730aaf14b5c247421e0b51b/master/pass/08-museums-national-gallery-singapore-cr-courtesy.jpg',
+    },
     // {
     //   question: 'Civilian War Memorial Singapore',
     //   index: 5,
@@ -344,7 +344,7 @@ export default function QuizAI({ user }) {
     //   img: 'https://a.cdn-hotels.com/gdcs/production156/d1955/6d67865b-01b6-4f5a-8fef-a38b822d0cdb.jpg',
     // },
 
-    { question: 'dummy question', index: 2, counter: 0 },
+    { question: 'dummy question', index: 5, counter: 0 },
   ];
 
   // Reset loading state when a new image is set
@@ -538,7 +538,6 @@ export default function QuizAI({ user }) {
 
   console.log(answer);
   console.log(indexOfQuestion, quizDataPoliticalLandmarks.length);
-  console.log(fullName, quizCategory, score.toString());
 
   // const paddingValue = theme.breakpoints.up('md') ? '80px' : '10px';
 
@@ -632,7 +631,7 @@ export default function QuizAI({ user }) {
                   width: '250px',
                   borderRadius: '7%',
                   marginBottom: '20px',
-                  marginTop: '10px',
+                  marginTop: '20px',
                   opacity: imageLoading ? 0 : 1,
                   transition: 'opacity 0.3s ease-in-out',
                 }}
@@ -695,13 +694,12 @@ export default function QuizAI({ user }) {
                           <Paper
                             elevation={3}
                             sx={{
-                              padding: '5px',
+                              padding: '10px',
                               textAlign: 'center',
-                              width: '120px',
-
-                              height: '90px',
+                              width: '100%',
+                              height: '160px',
                               borderRadius: '12%',
-                              marginBottom: '10px',
+                              marginBottom: '20px',
                               // marginLeft: paddingValue,
                               // marginRight: paddingValue,
                               backgroundColor: isCorrect
@@ -716,7 +714,7 @@ export default function QuizAI({ user }) {
                             <Grid item xs={3}>
                               <Typography
                                 sx={{ fontWeight: 'bold' }}
-                                variant="h6"
+                                variant="h5"
                               >
                                 {letter}
                               </Typography>
@@ -728,7 +726,7 @@ export default function QuizAI({ user }) {
                                 disabled={answerSelected}
                                 fullWidth
                                 style={{
-                                  fontSize: '10px',
+                                  fontSize: '13px',
                                   alignItems: 'center',
                                 }}
                               >
@@ -866,7 +864,7 @@ export default function QuizAI({ user }) {
             quizCategory === '' ||
             indexOfQuestion === quizDataPoliticalLandmarks.length - 2 ? null : (
               <CountdownTimer
-                initialTime={10}
+                initialTime={30}
                 moveToNextQuestion={moveToNextQuestion}
                 indexOfQuestion={indexOfQuestion}
                 quizDataPoliticalLandmarks={quizDataPoliticalLandmarks}
