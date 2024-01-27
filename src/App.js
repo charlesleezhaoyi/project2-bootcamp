@@ -83,7 +83,6 @@ const historicalLandmarks = {
   LabradorBattery: { lat: 1.2667, lng: 103.8025 },
   SingaporeConferenceHall: { lat: 1.2909, lng: 103.8527 },
   NationalMuseumOfSingapore: { lat: 1.2966, lng: 103.8485 },
-  // SungeiBulohWetlandReserve: { lat: 1.4467, lng: 103.7303 },
 };
 
 const natureParks = {
