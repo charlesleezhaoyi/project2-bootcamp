@@ -22,12 +22,12 @@ const generateCertificate = (name, course, scoreText) => {
   // Add recipient name
   doc.setFontSize(36);
   doc.setFont('helvetica'); // Change the font family and style
-  doc.text(name, 105, 160, { align: 'center' }); // 105 and 160: horizontal and vertical positions of the text
+  doc.text(name, 105, 150, { align: 'center' }); // 105 and 160: horizontal and vertical positions of the text
 
   // Add course name
   doc.setFontSize(20);
-  doc.text(course, 105, 195, { align: 'center' });
-  doc.text(scoreText, 95, 175, { align: 'center' }); // 105 and 195: horizontal and vertical positions of the text
+  doc.text(`For completing the ${course} quiz`, 105, 175, { align: 'center' });
+  doc.text(`Score: ${scoreText} points`, 105, 200, { align: 'center' }); // 105 and 195: horizontal and vertical positions of the text
 
   // Save the PDF
   doc.save(`${name}-${course}.pdf`);

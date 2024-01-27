@@ -1,14 +1,14 @@
 // Use this file in index.js as the root only as backup!
-import React from "react";
-import RenderMap from "../src/Services/Maps/RenderMap";
-import { useState, useEffect } from "react";
-import "./App.css";
-import { auth } from "./firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import AppBackground from "./Components/BackgroundApp";
-import SignIn from "./Components/SignIn";
+import React from 'react';
+import RenderMap from '../src/Services/Maps/RenderMap';
+import { useState, useEffect } from 'react';
+import './App.css';
+import { auth } from './firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import AppBackground from './Components/BackgroundApp';
+import SignIn from './Components/SignIn';
 
-import { AppLinks } from "./AppMain";
+import { AppLinks } from './AppMain';
 
 // MUI
 import {
@@ -17,49 +17,49 @@ import {
   Typography,
   CircularProgress,
   LinearProgress,
-} from "@mui/material";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import { styled } from "@mui/system";
+} from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/system';
 // import { Typography } from "@mui/material/styles/createTypography";
-import MenuItem from "@mui/material/MenuItem";
-import TemporaryDrawer from "./Components/TemporaryDrawer";
-import FetchingDataAnimation from "./Components/FetchingDataAnimation";
-import { useNavigate } from "react-router-dom";
-import ErrorOpenAI from "./Components/ErrorOpenAI";
+import MenuItem from '@mui/material/MenuItem';
+import TemporaryDrawer from './Components/TemporaryDrawer';
+import FetchingDataAnimation from './Components/FetchingDataAnimation';
+import { useNavigate } from 'react-router-dom';
+import ErrorOpenAI from './Components/ErrorOpenAI';
 // import { mapToStyles } from "@popperjs/core/lib/modifiers/computeStyles";
 // import { assertExpressionStatement } from "@babel/types";
 
 // Styling MUI function
-const StyledContainer = styled("div")({
-  display: "flex",
-  justifyContent: "flex-start",
+const StyledContainer = styled('div')({
+  display: 'flex',
+  justifyContent: 'flex-start',
 });
 
 const StyledGridItem = styled(Grid)({
-  width: "30%",
+  width: '30%',
 });
 
-const StyledGridPills = styled("div")({
-  width: "150px", // Define the width of your container
-  height: "100px", // Define the height of your container
-  marginBottom: "0px",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-end",
-  marginRight: "20px",
-  marginLeft: "20px",
+const StyledGridPills = styled('div')({
+  width: '150px', // Define the width of your container
+  height: '100px', // Define the height of your container
+  marginBottom: '0px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
+  marginRight: '20px',
+  marginLeft: '20px',
 });
 
 const linkStyle = {
-  marginRight: "50px",
-  marginLeft: "50px",
-  marginTop: "10px",
-  marginBottom: "10px",
-  textDecoration: "none",
-  color: "black",
-  fontWeight: "bold",
-  fontSize: "30px",
+  marginRight: '50px',
+  marginLeft: '50px',
+  marginTop: '10px',
+  marginBottom: '10px',
+  textDecoration: 'none',
+  color: 'black',
+  fontWeight: 'bold',
+  fontSize: '30px',
 };
 
 //Landmark coordinates
@@ -124,9 +124,9 @@ const politicalLandmarks = {
 
 function breakLines(response) {
   // Split the response into an array of strings
-  const lines = response.split("TAG");
+  const lines = response.split('TAG');
   // Join the array back into a string, with each element on a new line
-  const formattedResponse = lines.join("\n");
+  const formattedResponse = lines.join('\n');
 
   return formattedResponse;
 }
@@ -135,8 +135,8 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [isOnboarded, setIsOnboarded] = useState(false);
 
-  const [userMessage, setUserMessage] = useState("");
-  const [aiResponse, setAiResponse] = useState("");
+  const [userMessage, setUserMessage] = useState('');
+  const [aiResponse, setAiResponse] = useState('');
   const [selectedLandmarks, setSelectedLandmarks] =
     useState(historicalLandmarks);
   const [directionSteps, setDirectionSteps] = useState({
@@ -189,14 +189,14 @@ const App = () => {
 
   const handleLogout = async () => {
     try {
-      console.log("Logging out...");
+      console.log('Logging out...');
       await signOut(auth);
-      console.log("User signed out");
+      console.log('User signed out');
       setUser({});
       setIsLoggedIn(false);
-      console.log("Navigation complete");
+      console.log('Navigation complete');
     } catch (err) {
-      console.error("Error signing out", err);
+      console.error('Error signing out', err);
     }
   };
 
@@ -205,12 +205,12 @@ const App = () => {
     setLoading(true);
 
     try {
-      const messageToSend = userMessage === "" ? targetMessage : userMessage;
+      const messageToSend = userMessage === '' ? targetMessage : userMessage;
 
-      const response = await fetch("http://localhost:3002/send-message", {
-        method: "POST",
+      const response = await fetch('http://localhost:3002/send-message', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ message: messageToSend }),
       });
@@ -219,8 +219,8 @@ const App = () => {
 
       if (!response.ok) {
         // setErrorStatus(true);
-        console.log("TEST", loading);
-        navigate("/error");
+        console.log('TEST', loading);
+        navigate('/error');
         throw new Error(`HTTP Error! Status: ${response.status}`);
       }
 
@@ -228,7 +228,7 @@ const App = () => {
       const formattedResponse = await breakLines(data.message);
       console.log(formattedResponse);
       setAiResponse(formattedResponse);
-      setUserMessage("");
+      setUserMessage('');
 
       // console.log(data.message);
 
@@ -236,14 +236,14 @@ const App = () => {
     } catch (error) {
       setLoading(true);
       setErrorStatus(true);
-      navigate("/error");
-      console.error("Error sending message:", error);
+      navigate('/error');
+      console.error('Error sending message:', error);
       // Handle error state here if needed
     }
   };
 
   const clearAIResponse = () => {
-    setAiResponse("");
+    setAiResponse('');
   };
 
   const handleDirectionsResult = (steps) => {
@@ -270,9 +270,10 @@ const App = () => {
         {isLoggedIn ? (
           <Box
             style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "20px",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '20px',
             }}
           >
             <TemporaryDrawer
@@ -296,13 +297,24 @@ const App = () => {
                 />
               }
             />
+            <img
+              style={{ marginRight: '20px', marginTop: '5px' }}
+              src="data:image/png;base64,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"
+              alt="Merlion"
+            />
             <Typography
               variant="h5"
-              style={{ whiteSpace: "nowrap", margin: "0" }}
+              style={{
+                whiteSpace: 'nowrap',
+                margin: '0',
+                color: 'maroon',
+                fontWeight: 'bold',
+                fontSize: '25px',
+              }}
             >
               Merlion Landmarks
             </Typography>
-            <Box className="link-container">
+            <Box className="link-container" style={{ marginLeft: 'auto' }}>
               <AppLinks />
             </Box>
           </Box>
@@ -316,10 +328,10 @@ const App = () => {
             <StyledGridItem
               item
               style={{
-                width: "100%",
-                height: "100%",
-                position: "relative", // Make this a positioning context
-                marginTop: "0px",
+                width: '100%',
+                height: '100%',
+                position: 'relative', // Make this a positioning context
+                marginTop: '0px',
               }}
             >
               <RenderMap
@@ -329,7 +341,7 @@ const App = () => {
               />
               <StyledGridPills
                 item
-                style={{ position: "absolute", top: -40, left: 560 }}
+                style={{ position: 'absolute', top: -40, left: 560 }}
               >
                 <Button
                   variant="contained"
@@ -341,14 +353,14 @@ const App = () => {
                       landmarks={natureParks}
                     />;
                   }}
-                  sx={{ width: "150px", height: "50px", zIndex: "100" }}
+                  sx={{ width: '150px', height: '50px', zIndex: '100' }}
                 >
                   Nature Parks
                 </Button>
               </StyledGridPills>
               <StyledGridPills
                 item
-                style={{ position: "absolute", top: -40, left: 380 }}
+                style={{ position: 'absolute', top: -40, left: 380 }}
               >
                 <Button
                   variant="contained"
@@ -360,14 +372,14 @@ const App = () => {
                       landmarks={politicalLandmarks}
                     />;
                   }}
-                  sx={{ width: "150px", height: "50px", zIndex: "100" }}
+                  sx={{ width: '150px', height: '50px', zIndex: '100' }}
                 >
                   Political Landmarks
                 </Button>
               </StyledGridPills>
               <StyledGridPills
                 item
-                style={{ position: "absolute", top: -40, left: 200 }}
+                style={{ position: 'absolute', top: -40, left: 200 }}
               >
                 <Button
                   variant="contained"
@@ -375,7 +387,7 @@ const App = () => {
                   onClick={() => {
                     setSelectedLandmarks(historicalLandmarks);
                   }}
-                  sx={{ width: "150px", height: "50px", zIndex: "100" }}
+                  sx={{ width: '150px', height: '50px', zIndex: '100' }}
                 >
                   Historical Landmarks
                 </Button>
