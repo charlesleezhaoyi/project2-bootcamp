@@ -21,7 +21,7 @@ const CountdownTimer = ({
 
     // Clearing the interval everytime time variable is updated (i.e., 1 second has passed)
     if (time === 0) {
-      moveToNextQuestion();
+      // moveToNextQuestion();
       setTime(initialTime);
     }
 
