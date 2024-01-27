@@ -324,13 +324,7 @@ const App = () => {
 
         {isLoggedIn && (
           <StyledContainer>
-            <StyledGridItem item sx={{ margin: '20px' }}>
-              <Box
-                sx={{
-                  '& .MuiTextField-root': { m: 1, width: '25ch' },
-                }}
-              ></Box>
-            </StyledGridItem>
+            <StyledGridItem item></StyledGridItem>
             <StyledGridItem
               item
               style={{

@@ -627,8 +627,8 @@ export default function QuizAI({ user }) {
                 className="image-2"
                 onLoad={handleImageLoad}
                 style={{
-                  height: '250px',
-                  width: '250px',
+                  height: '350px',
+                  width: '350px',
                   borderRadius: '7%',
                   marginBottom: '20px',
                   marginTop: '20px',
