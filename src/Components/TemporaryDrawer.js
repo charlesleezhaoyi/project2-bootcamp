@@ -30,7 +30,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { treadmill } from 'ldrs';
 import { dotWave } from 'ldrs';
-import { Timeline, TimelineOldHill } from './Timelines/Timeline';
+import { Timeline, TimelineOldHill } from './Timelines/TimelineHistorical';
 
 import AppBackground from './BackgroundApp';
 

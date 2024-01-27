@@ -18,6 +18,13 @@ const Timeline = ({ timelineClicked, setTimelineClicked }) => {
             title: '1887',
             cardTitle: 'Establishment of Raffles Hotel',
             url: 'https://en.wikipedia.org/wiki/Raffles_Hotel',
+            media: {
+              name: 'Raffles Hotel',
+              source: {
+                url: 'https://www.historichotels.org/images/uploads/SINRH/historyimages/Historical_Image_of_Exterior_Circa_1921_Raffles_Hotel_Singapore_Historic_Hotels_Worldwide_in_Singapore_Singapore.jpg',
+              },
+              type: 'IMAGE',
+            },
             cardSubtitle:
               'Raffles Hotel, a colonial-era icon, is established in Singapore.',
             cardDetailedText: `Raffles Hotel, an iconic colonial-era establishment, was established in 1887 in Singapore. Founded by the Armenian Sarkies brothers, the hotel quickly became a symbol of luxury and elegance. Over the years, it has hosted numerous famous personalities and played a significant role in Singapore's history.`,
@@ -25,23 +32,44 @@ const Timeline = ({ timelineClicked, setTimelineClicked }) => {
           {
             title: '1915',
             cardTitle: 'Raffles during World War I',
+            media: {
+              name: 'Raffles Hotel',
+              source: {
+                url: 'https://collections.museumsvictoria.com.au/content/media/22/572322-large.jpg',
+              },
+              type: 'IMAGE',
+            },
             cardSubtitle: `Raffles Hotel serves as a base for British soldiers during World War I.`,
             cardDetailedText: `During World War I, Raffles Hotel served as a base for British soldiers. The hotel witnessed the impact of the war on the region and played a role in providing accommodation and support for military personnel.`,
           },
           {
             title: '1989',
             cardTitle: 'Restoration and Reopening',
+            media: {
+              name: 'Raffles Hotel',
+              source: {
+                url: 'https://senicaproductions.com/wp-content/uploads/2017/03/1989-last-day-before-close-for-2-yr-reno-national-archives-singapore.jpg',
+              },
+              type: 'IMAGE',
+            },
             cardSubtitle: `Raffles Hotel undergoes restoration and reopens to the public.`,
             cardDetailedText: `In 1989, Raffles Hotel underwent a comprehensive restoration to preserve its heritage and architectural significance. The hotel reopened its doors to the public, continuing its legacy as a premier luxury destination in Singapore.`,
           },
           {
             title: 'Present',
             cardTitle: 'Modern Elegance',
+            media: {
+              name: 'Raffles Hotel',
+              source: {
+                url: 'https://senicaproductions.com/wp-content/uploads/2017/03/1989-last-day-before-close-for-2-yr-reno-national-archives-singapore.jpg',
+              },
+              type: 'IMAGE',
+            },
             cardSubtitle: `Raffles Hotel stands as a symbol of modern elegance in Singapore.`,
             cardDetailedText: `Today, Raffles Hotel stands as a symbol of modern elegance while preserving its historical charm. It remains a renowned luxury hotel, offering a unique blend of tradition and sophistication to guests from around the world.`,
           },
         ]}
-        mode="VERTICAL"
+        mode="VERTICAL_ALTERNATING"
       />
     </>
   );
@@ -86,7 +114,7 @@ const TimelineOldHill = ({ timelineClicked, setTimelineClicked }) => {
             cardDetailedText: `In 2010, Old Hill Street Police Station underwent a modern transformation to adapt to contemporary needs. The restoration efforts aimed at preserving the historical significance while incorporating modern amenities. The building continues to be a symbol of Singapore's rich history and architectural diversity.`,
           },
         ]}
-        mode="VERTICAL"
+        mode="VERTICAL_ALTERNATING"
       />
     </>
   );
