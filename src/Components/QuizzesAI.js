@@ -343,6 +343,7 @@ export default function QuizAI({ user }) {
     //   index: 14,
     //   img: 'https://a.cdn-hotels.com/gdcs/production156/d1955/6d67865b-01b6-4f5a-8fef-a38b822d0cdb.jpg',
     // },
+
     { question: 'dummy question', index: 5, counter: 0 },
   ];
 
@@ -696,7 +697,7 @@ export default function QuizAI({ user }) {
                               padding: '10px',
                               textAlign: 'center',
                               width: '100%',
-                              height: '180px',
+                              height: '160px',
                               borderRadius: '12%',
                               marginBottom: '20px',
                               // marginLeft: paddingValue,
@@ -713,7 +714,7 @@ export default function QuizAI({ user }) {
                             <Grid item xs={3}>
                               <Typography
                                 sx={{ fontWeight: 'bold' }}
-                                variant="h4"
+                                variant="h5"
                               >
                                 {letter}
                               </Typography>
@@ -724,6 +725,10 @@ export default function QuizAI({ user }) {
                                 onClick={() => handleAnswerClick(letter)}
                                 disabled={answerSelected}
                                 fullWidth
+                                style={{
+                                  fontSize: '13px',
+                                  alignItems: 'center',
+                                }}
                               >
                                 {choice}
                               </Button>
