@@ -61,7 +61,7 @@ const Timeline = ({ timelineClicked, setTimelineClicked }) => {
             media: {
               name: 'Raffles Hotel',
               source: {
-                url: 'https://senicaproductions.com/wp-content/uploads/2017/03/1989-last-day-before-close-for-2-yr-reno-national-archives-singapore.jpg',
+                url: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/33/be/9c/raffles-hotel-singapore.jpg?w=700&h=-1&s=1',
               },
               type: 'IMAGE',
             },

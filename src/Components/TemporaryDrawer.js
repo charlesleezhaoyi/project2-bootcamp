@@ -106,7 +106,7 @@ export default function TemporaryDrawer({
   const [userMessage, setUserMessage] = React.useState('');
   const [landmarksChange, setLandmarksChange] = React.useState(null);
   const [drawerDefaultText, setDrawerDefaultText] = React.useState(
-    'Uncover the world with our interactive maps feature! Navigate through nature parks, historical landmarks, and political landmarks. Each landmark is marked with informative pills. Click on them to unveil AI-generated responses.',
+    'Uncover the world with our interactive maps feature!  Each landmark category is marked with informative pills. Click on them to unveil AI-generated responses.',
   );
   const [timelineClicked, setTimelineClicked] = React.useState(false);
 
@@ -168,6 +168,19 @@ export default function TemporaryDrawer({
     >
       <Divider />
       <List>
+        <Box>
+          <Typography
+            variant="h5"
+            sx={{
+              fontFamily: 'Roboto',
+              color: 'maroon',
+              margin: '20px',
+              fontWeight: 'bold',
+            }}
+          >
+            {drawerDefaultText}
+          </Typography>
+        </Box>
         <List className="drawer-links">
           <IconButton
             onClick={toggleDrawer(anchor, false)}
@@ -306,7 +319,7 @@ export default function TemporaryDrawer({
               fontWeight: 'bold',
             }}
           >
-            {/* {drawerDefaultText} */}AI Response:
+            AI Response:
           </Typography>
 
           <Typography
