@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -6,11 +6,9 @@ import {
   InfoWindow,
   DirectionsRenderer,
   DirectionsService,
-} from '@react-google-maps/api';
-import axios from 'axios';
+} from "@react-google-maps/api";
+import axios from "axios";
 //import singaporeflag from "../../Data/singaporeflag.png";
-import { realTimeDatabase } from '../../firebase';
-import { set, ref } from 'firebase/database';
 
 // const icon = singaporeflag;
 // const iconSize = {
@@ -19,8 +17,8 @@ import { set, ref } from 'firebase/database';
 // };
 
 const mapContainerStyle = {
-  width: '100vw',
-  height: '100vh',
+  width: "100vw",
+  height: "100vh",
 };
 const center = {
   lat: 1.3513,
@@ -28,7 +26,7 @@ const center = {
 };
 
 function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
-  const [libraries] = useState(['places']);
+  const [libraries] = useState(["places"]);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -52,7 +50,7 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
   const mapRef = useRef();
 
   const onMapLoad = useCallback((map) => {
-    console.log('1. Map Loaded');
+    console.log("1. Map Loaded");
     mapRef.current = map;
     const transitLayer = new window.google.maps.TransitLayer();
     const trafficLayer = new window.google.maps.TrafficLayer();
@@ -63,12 +61,12 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
   }, []);
 
   const onDirectionsServiceLoad = useCallback((directionsService) => {
-    console.log('2. Directions Service Loaded');
+    console.log("2. Directions Service Loaded");
     directionsServiceRef.current = directionsService;
   }, []);
 
   const onDirectionsRendererLoad = useCallback((directionsRenderer) => {
-    console.log('3. Directions RendererLoaded');
+    console.log("3. Directions RendererLoaded");
     directionsRendererRef.current = directionsRenderer;
   }, []);
 
@@ -81,15 +79,35 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
             lng: position.coords.longitude,
           });
         },
-        function () {},
+        function () {}
       );
     } else {
     }
   }, []);
 
+  const attachInstructionText = (marker, text) => {
+    window.google.maps.event.addListener(marker, "click", function () {
+      const stepDisplay = new window.google.maps.InfoWindow();
+      stepDisplay.setContent(text);
+      stepDisplay.open(mapRef.current, marker);
+    });
+  };
+
+  const showSteps = (directionResult) => {
+    const userRoute = directionResult.routes[0].legs[0];
+
+    for (let i = 0; i < userRoute.steps.length; i++) {
+      const marker = new window.google.maps.Marker({
+        position: userRoute.steps[i].start_location,
+        map: mapRef.current,
+      });
+      attachInstructionText(marker, userRoute.steps[i].instructions);
+    }
+  };
+
   const calculateRoute = useCallback(
     (selectedPlace) => {
-      console.log('Calculating Route');
+      console.log("Calculating Route");
       console.log(userStartLocation);
       const start = userStartLocation;
       console.log(selectedPlace);
@@ -97,12 +115,12 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
       if (
         !start ||
         !end ||
-        typeof start.lat !== 'number' ||
-        typeof start.lng !== 'number' ||
-        typeof end.lat !== 'number' ||
-        typeof end.lng !== 'number'
+        typeof start.lat !== "number" ||
+        typeof start.lng !== "number" ||
+        typeof end.lat !== "number" ||
+        typeof end.lng !== "number"
       ) {
-        console.error('Invalid start or end:', start, end);
+        console.error("Invalid start or end:", start, end);
         return;
       }
 
@@ -111,48 +129,50 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
           {
             origin: start,
             destination: end,
-            travelMode: 'TRANSIT',
+            travelMode: "TRANSIT",
           },
           (result, status) => {
-            if (status === 'OK') {
+            if (status === "OK") {
               try {
                 if (directionsRendererRef.current) {
                   directionsRendererRef.current.setDirections(result);
                 }
                 console.log(result);
                 const steps = result.routes[0].legs[0].steps;
-                if (typeof onDirectionsResult === 'function') {
+                console.log(steps);
+                if (typeof onDirectionsResult === "function") {
                   onDirectionsResult(steps);
+                  showSteps(result);
                 }
               } catch (error) {
                 console.error(
-                  'Error setting directions or calling onDirectionsResult:',
-                  error,
+                  "Error setting directions or calling onDirectionsResult:",
+                  error
                 );
               }
             } else {
               console.error(`Error calculating route: ${status}`);
             }
-          },
+          }
         );
       }
     },
-    [userStartLocation, onDirectionsResult],
+    [userStartLocation, onDirectionsResult]
   );
 
   const onMarkerClick = useCallback(
     (position) => {
-      console.log('Marker clicked');
+      console.log("Marker clicked");
       mapRef.current.panTo(position);
       mapRef.current.setZoom(15);
       setSelectedPlace(position);
       calculateRoute(position);
     },
-    [calculateRoute],
+    [calculateRoute]
   );
 
   const onMapClick = useCallback((event) => {
-    console.log('map clicked');
+    console.log("map clicked");
     const lat = event.latLng.lat();
     console.log(lat);
     const lng = event.latLng.lng();
@@ -163,21 +183,22 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
       lng: lng,
     };
     onMarkerClick(newLocation);
+    console.log(newLocation);
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`,
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
       )
       .then((res) => {
         setSelectedPlace(res.data.results[0]);
         sendMessage(
-          `You are a world class historian, who is as established as Associate Professor Joey Long, or Dr Masuda Hajimu, with expert knowledge on Singapore's every landmark and building, as well as its relevant historical developments. 
-          What is the name of this landmark with the following address:${res.data.results[0].formatted_address}. Use 3 different paragraphs and prepend each new paragraph with TAG, followed by sharing related historical events, and what developments occurred in the last 20 years in Singapore. Word limit is 200 words. Provide a break with the end of each paragraph`,
+          `You are a world class historian, Associate Professor Joey Long, with expert knowledge on Singapore's every landmark and building, as well as its relevant historical developments. 
+          What is the name of the landmark with the following address:${res.data.results[0].formatted_address}. Being as concise, succinct as possible, use different paragraphs and prepend each new paragraph with TAG, followed by sharing its history with Singaporeans, in order to provide them with quality history education. Avoid the use of any of the following symbols ':'`
         );
       });
   }, []);
 
-  if (loadError) return 'Error loading maps';
-  if (!isLoaded) return 'Loading Maps';
+  if (loadError) return "Error loading maps";
+  if (!isLoaded) return "Loading Maps";
 
   return (
     <>
@@ -213,10 +234,10 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
           options={{
             origin: userStartLocation,
             destination: selectedPlace,
-            travelMode: 'TRANSIT',
+            travelMode: "TRANSIT",
             transitOptions: {
-              modes: ['BUS', 'RAIL', 'SUBWAY'],
-              routingPreference: 'FEWER_TRANSFERS',
+              modes: ["BUS", "RAIL", "SUBWAY"],
+              routingPreference: "FEWER_TRANSFERS",
             },
           }}
           onLoad={onDirectionsServiceLoad}

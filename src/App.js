@@ -1,14 +1,14 @@
 // Use this file in index.js as the root only as backup!
-import React from 'react';
-import RenderMap from '../src/Services/Maps/RenderMap';
-import { useState, useEffect } from 'react';
-import './App.css';
-import { auth } from './firebase';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import AppBackground from './Components/BackgroundApp';
-import SignIn from './Components/SignIn';
+import React from "react";
+import RenderMap from "../src/Services/Maps/RenderMap";
+import { useState, useEffect } from "react";
+import "./App.css";
+import { auth } from "./firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import AppBackground from "./Components/BackgroundApp";
+import SignIn from "./Components/SignIn";
 
-import { AppLinks } from './AppMain';
+import { AppLinks } from "./AppMain";
 
 // MUI
 import {
@@ -17,49 +17,49 @@ import {
   Typography,
   CircularProgress,
   LinearProgress,
-} from '@mui/material';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/system';
+} from "@mui/material";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import { styled } from "@mui/system";
 // import { Typography } from "@mui/material/styles/createTypography";
-import MenuItem from '@mui/material/MenuItem';
-import TemporaryDrawer from './Components/TemporaryDrawer';
-import FetchingDataAnimation from './Components/FetchingDataAnimation';
-import { useNavigate } from 'react-router-dom';
-import ErrorOpenAI from './Components/ErrorOpenAI';
+import MenuItem from "@mui/material/MenuItem";
+import TemporaryDrawer from "./Components/TemporaryDrawer";
+import FetchingDataAnimation from "./Components/FetchingDataAnimation";
+import { useNavigate } from "react-router-dom";
+import ErrorOpenAI from "./Components/ErrorOpenAI";
 // import { mapToStyles } from "@popperjs/core/lib/modifiers/computeStyles";
 // import { assertExpressionStatement } from "@babel/types";
 
 // Styling MUI function
-const StyledContainer = styled('div')({
-  display: 'flex',
-  justifyContent: 'flex-start',
+const StyledContainer = styled("div")({
+  display: "flex",
+  justifyContent: "flex-start",
 });
 
 const StyledGridItem = styled(Grid)({
-  width: '30%',
+  width: "30%",
 });
 
-const StyledGridPills = styled('div')({
-  width: '150px', // Define the width of your container
-  height: '100px', // Define the height of your container
-  marginBottom: '0px',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-end',
-  marginRight: '20px',
-  marginLeft: '20px',
+const StyledGridPills = styled("div")({
+  width: "150px", // Define the width of your container
+  height: "100px", // Define the height of your container
+  marginBottom: "0px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-end",
+  marginRight: "20px",
+  marginLeft: "20px",
 });
 
 const linkStyle = {
-  marginRight: '50px',
-  marginLeft: '50px',
-  marginTop: '10px',
-  marginBottom: '10px',
-  textDecoration: 'none',
-  color: 'black',
-  fontWeight: 'bold',
-  fontSize: '30px',
+  marginRight: "50px",
+  marginLeft: "50px",
+  marginTop: "10px",
+  marginBottom: "10px",
+  textDecoration: "none",
+  color: "black",
+  fontWeight: "bold",
+  fontSize: "30px",
 };
 
 //Landmark coordinates
@@ -124,9 +124,9 @@ const politicalLandmarks = {
 
 function breakLines(response) {
   // Split the response into an array of strings
-  const lines = response.split('TAG');
+  const lines = response.split("TAG");
   // Join the array back into a string, with each element on a new line
-  const formattedResponse = lines.join('\n');
+  const formattedResponse = lines.join("\n");
 
   return formattedResponse;
 }
@@ -135,8 +135,8 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [isOnboarded, setIsOnboarded] = useState(false);
 
-  const [userMessage, setUserMessage] = useState('');
-  const [aiResponse, setAiResponse] = useState('');
+  const [userMessage, setUserMessage] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
   const [selectedLandmarks, setSelectedLandmarks] =
     useState(historicalLandmarks);
   const [directionSteps, setDirectionSteps] = useState({
@@ -189,14 +189,14 @@ const App = () => {
 
   const handleLogout = async () => {
     try {
-      console.log('Logging out...');
+      console.log("Logging out...");
       await signOut(auth);
-      console.log('User signed out');
+      console.log("User signed out");
       setUser({});
       setIsLoggedIn(false);
-      console.log('Navigation complete');
+      console.log("Navigation complete");
     } catch (err) {
-      console.error('Error signing out', err);
+      console.error("Error signing out", err);
     }
   };
 
@@ -205,12 +205,12 @@ const App = () => {
     setLoading(true);
 
     try {
-      const messageToSend = userMessage === '' ? targetMessage : userMessage;
+      const messageToSend = userMessage === "" ? targetMessage : userMessage;
 
-      const response = await fetch('http://localhost:3002/send-message', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3002/send-message", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ message: messageToSend }),
       });
@@ -219,8 +219,8 @@ const App = () => {
 
       if (!response.ok) {
         // setErrorStatus(true);
-        console.log('TEST', loading);
-        navigate('/error');
+        console.log("TEST", loading);
+        navigate("/error");
         throw new Error(`HTTP Error! Status: ${response.status}`);
       }
 
@@ -228,7 +228,7 @@ const App = () => {
       const formattedResponse = await breakLines(data.message);
       console.log(formattedResponse);
       setAiResponse(formattedResponse);
-      setUserMessage('');
+      setUserMessage("");
 
       // console.log(data.message);
 
@@ -236,14 +236,14 @@ const App = () => {
     } catch (error) {
       setLoading(true);
       setErrorStatus(true);
-      navigate('/error');
-      console.error('Error sending message:', error);
+      navigate("/error");
+      console.error("Error sending message:", error);
       // Handle error state here if needed
     }
   };
 
   const clearAIResponse = () => {
-    setAiResponse('');
+    setAiResponse("");
   };
 
   const handleDirectionsResult = (steps) => {
@@ -270,9 +270,9 @@ const App = () => {
         {isLoggedIn ? (
           <Box
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              marginBottom: '20px',
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "20px",
             }}
           >
             <TemporaryDrawer
@@ -298,7 +298,7 @@ const App = () => {
             />
             <Typography
               variant="h5"
-              style={{ whiteSpace: 'nowrap', margin: '0' }}
+              style={{ whiteSpace: "nowrap", margin: "0" }}
             >
               Merlion Landmarks
             </Typography>
@@ -328,20 +328,13 @@ const App = () => {
                 Log out
               </Button> */}
             </StyledGridItem>
-            <StyledGridItem item sx={{ margin: '20px' }}>
-              <Box
-                sx={{
-                  '& .MuiTextField-root': { m: 1, width: '25ch' },
-                }}
-              ></Box>
-            </StyledGridItem>
             <StyledGridItem
               item
               style={{
-                width: '100%',
-                height: '100%',
-                position: 'relative', // Make this a positioning context
-                marginTop: '0px',
+                width: "100%",
+                height: "100%",
+                position: "relative", // Make this a positioning context
+                marginTop: "0px",
               }}
             >
               <RenderMap
@@ -351,7 +344,7 @@ const App = () => {
               />
               <StyledGridPills
                 item
-                style={{ position: 'absolute', top: -40, left: 560 }}
+                style={{ position: "absolute", top: -40, left: 560 }}
               >
                 <Button
                   variant="contained"
@@ -363,14 +356,14 @@ const App = () => {
                       landmarks={natureParks}
                     />;
                   }}
-                  sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                  sx={{ width: "150px", height: "50px", zIndex: "100" }}
                 >
                   Nature Parks
                 </Button>
               </StyledGridPills>
               <StyledGridPills
                 item
-                style={{ position: 'absolute', top: -40, left: 380 }}
+                style={{ position: "absolute", top: -40, left: 380 }}
               >
                 <Button
                   variant="contained"
@@ -382,14 +375,14 @@ const App = () => {
                       landmarks={politicalLandmarks}
                     />;
                   }}
-                  sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                  sx={{ width: "150px", height: "50px", zIndex: "100" }}
                 >
                   Political Landmarks
                 </Button>
               </StyledGridPills>
               <StyledGridPills
                 item
-                style={{ position: 'absolute', top: -40, left: 200 }}
+                style={{ position: "absolute", top: -40, left: 200 }}
               >
                 <Button
                   variant="contained"
@@ -397,7 +390,7 @@ const App = () => {
                   onClick={() => {
                     setSelectedLandmarks(historicalLandmarks);
                   }}
-                  sx={{ width: '150px', height: '50px', zIndex: '100' }}
+                  sx={{ width: "150px", height: "50px", zIndex: "100" }}
                 >
                   Historical Landmarks
                 </Button>
