@@ -52,6 +52,9 @@ export default function TemporaryDrawer({
   });
   const [userMessage, setUserMessage] = React.useState("");
   const [landmarksChange, setLandmarksChange] = React.useState(null);
+  const [drawerDefaultText, setDrawerDefaultText] = React.useState(
+    "Uncover the world with our interactive maps feature! Navigate through nature parks, historical landmarks, and political landmarks. Each landmark is marked with informative pills. Click on them to unveil AI-generated responses."
+  );
 
   const toggleDrawer = (anchor, open) => (event) => {
     // toggleDrawer is a higher order function that accepts the left and true/false arguments and returns an event object (e.g., can be a keydown or tab/shift)
@@ -76,6 +79,7 @@ export default function TemporaryDrawer({
   React.useEffect(() => {
     if (landmarksChange === true) {
       setState({ ...state, left: false });
+      setDrawerDefaultText("Did you know?");
     }
 
     if (landmarksChange === false) {
@@ -95,167 +99,24 @@ export default function TemporaryDrawer({
       // onClick={toggleDrawer(anchor, false)}
       // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        <List className="drawer-links">
-          <IconButton
-            onClick={toggleDrawer(anchor, false)}
-            sx={{ marginLeft: "300px" }}
-          >
-            <CloseIcon />
-          </IconButton>
-
-          {linksData.map((text, index) => (
-            <ListItemButton key={text}>
-              <ListItemIcon>
-                <Link to={`/${text}`}>
-                  {text === "" ? (
-                    <IconButton onClick={toggleDrawer(anchor, false)}>
-                      <HomeIcon sx={{ margin: "10px" }} />
-                      Home
-                    </IconButton>
-                  ) : text === "quizzesAI" ? (
-                    <IconButton>
-                      <QuizIcon sx={{ margin: "10px" }} /> Quiz
-                    </IconButton>
-                  ) : text === "guide" ? (
-                    <IconButton>
-                      <MenuBookIcon sx={{ margin: "10px" }} /> Guide
-                    </IconButton>
-                  ) : null}
-                </Link>
-              </ListItemIcon>
-            </ListItemButton>
-          ))}
-        </List>
-        <List>
-          <ListItemIcon>
-            <IconButton
-              onClick={() => {
-                setSelectedLandmarks(historicalLandmarks);
-                setLandmarksChange(true);
-                console.log(landmarksChange);
-              }}
-            >
-              <AttractionsIcon sx={{ margin: "20px" }} />
-              Historical Landmarks
-            </IconButton>
-          </ListItemIcon>
-          <ListItemIcon>
-            <IconButton
-              onClick={() => {
-                setSelectedLandmarks(natureParks);
-                setLandmarksChange(true);
-                console.log(landmarksChange);
-              }}
-            >
-              <SailingIcon sx={{ margin: "20px" }} />
-              Nature Parks
-            </IconButton>
-          </ListItemIcon>
-          <ListItemIcon>
-            <IconButton
-              onClick={() => {
-                setSelectedLandmarks(politicalLandmarks);
-                setLandmarksChange(true);
-                console.log(landmarksChange);
-              }}
-            >
-              <TakeoutDiningIcon sx={{ margin: "20px" }} />
-              Political Landmarks
-            </IconButton>
-          </ListItemIcon>
-        </List>
-        {/* <List>
-          {['Singapore Flyer', 'Sentosa Island', 'Chinatown Singapore'].map(
-            (text, index) => (
-              <ListItemButton key={text}>
-                <ListItemIcon>
-                  {text === 'Singapore Flyer' ? (
-                    <IconButton
-                      variant="contained"
-                      onClick={() => {
-                        const message =
-                          "Singapore Flyer's history in 1 sentence";
-                        sendMessage(message);
-                      }}
-                      sx={{ width: '50%', marginBottom: '20px' }}
-                    >
-                      <AttractionsIcon />
-                    </IconButton>
-                  ) : text === 'Sentosa Island' ? (
-                    <IconButton
-                      variant="contained"
-                      onClick={() => {
-                        const message =
-                          "Sentosa Island's history in 1 sentence";
-                        sendMessage(message);
-                      }}
-                      sx={{ width: '50%', marginBottom: '20px' }}
-                    >
-                      <SailingIcon />
-                    </IconButton>
-                  ) : text === 'Chinatown Singapore' ? (
-                    <IconButton
-                      variant="contained"
-                      onClick={() => {
-                        const message =
-                          "Chinatown Singapore's history in 1 sentence";
-                        sendMessage(message);
-                      }}
-                      sx={{ width: '50%', marginBottom: '20px' }}
-                    >
-                      <TakeoutDiningIcon />
-                    </IconButton>
-                  ) : null}
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  onClick={() => {
-                    const message = `${text}'s history in 1 sentence`;
-                    sendMessage(message);
-                  }}
-                />
-              </ListItemButton>
-            ),
-          )}
-        </List> */}
-      </List>
       <Divider />
-      <Box sx={{ marginLeft: "10px" }}>
-        <TextField
-          type="text"
-          value={userMessage}
-          onChange={(e) => setUserMessage(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          color="error"
-          // onClick={sendMessage}
-          onClick={() => {
-            sendMessage(userMessage);
-          }}
-          sx={{ mt: "20px", mb: "20px" }}
-        >
-          Send Message
-        </Button>
-      </Box>
       <Divider />
       <Box sx={{ marginLeft: "10px" }}>
         <Box className="ai-response">
           <Typography
-            variant="h4"
-            sx={{ fontFamily: "Roboto", color: "primary" }}
+            variant="h5"
+            sx={{ fontFamily: "Roboto", color: "primary", mt: "40px" }}
           >
-            AI Response:
+            {drawerDefaultText}
           </Typography>
           <Typography
-            variant="h6"
+            variant="h"
             sx={{ fontFamily: "Roboto", color: "primary" }}
           >
             {aiResponse.split("\n").map((line, index) => (
               <React.Fragment key={index}>
                 {line}
-                <br />
+                <p></p>
               </React.Fragment>
             ))}
           </Typography>
@@ -264,10 +125,13 @@ export default function TemporaryDrawer({
           <Button
             variant="contained"
             color="error"
-            onClick={clearAIResponse}
+            onClick={(e) => {
+              handleLogout();
+              signOut(auth);
+            }}
             sx={{ mt: "20px", mb: "20px" }}
           >
-            Clear
+            Logout
           </Button>
         </Box>
         <IconButton
