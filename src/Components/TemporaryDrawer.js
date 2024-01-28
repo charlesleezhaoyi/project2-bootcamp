@@ -30,9 +30,14 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { treadmill } from 'ldrs';
 import { dotWave } from 'ldrs';
-import { Timeline, TimelineOldHill } from './Timelines/TimelineHistorical';
+import {
+  Timeline,
+  TimelineFordFactory,
+  TimelineOldHill,
+} from './Timelines/TimelineHistorical';
 
 import AppBackground from './BackgroundApp';
+import HistoricalLandmarkTimelineCollection from './HistoricalLandmarkTimelineCollection';
 
 dotWave.register();
 
@@ -70,14 +75,6 @@ const historicalLandmarksTimeline = [
   'Singapore Conference Hall',
   'National Museum Of Singapore',
 ];
-
-const nameToFunctionMap = {
-  'Raffles Hotel': () => {
-    console.log('Raffles hotel was called');
-
-    return <Timeline />;
-  },
-};
 
 const linksData = ['', 'quizzes', 'quizzesAI', 'onboarding', 'guide'];
 
@@ -146,7 +143,7 @@ export default function TemporaryDrawer({
   React.useEffect(() => {
     if (landmarksChange === true) {
       setState({ ...state, left: false });
-      setDrawerDefaultText('Did you know?');
+      // setDrawerDefaultText('Did you know?');
     }
 
     if (landmarksChange === false) {
@@ -218,7 +215,6 @@ export default function TemporaryDrawer({
               onClick={() => {
                 setSelectedLandmarks(historicalLandmarks);
                 setLandmarksChange(true);
-                console.log(landmarksChange);
               }}
             >
               <AttractionsIcon sx={{ margin: '20px' }} />
@@ -230,7 +226,6 @@ export default function TemporaryDrawer({
               onClick={() => {
                 setSelectedLandmarks(natureParks);
                 setLandmarksChange(true);
-                console.log(landmarksChange);
               }}
             >
               <SailingIcon sx={{ margin: '20px' }} />
@@ -242,7 +237,6 @@ export default function TemporaryDrawer({
               onClick={() => {
                 setSelectedLandmarks(politicalLandmarks);
                 setLandmarksChange(true);
-                console.log(landmarksChange);
               }}
             >
               <TakeoutDiningIcon sx={{ margin: '20px' }} />
@@ -282,8 +276,8 @@ export default function TemporaryDrawer({
             value={landmarkName}
             onChange={handleChange}
             inputProps={{
-              name: 'age',
-              id: 'uncontrolled-native',
+              name: 'historical',
+              id: 'uncontrolled-native-political',
             }}
           >
             <option value={''}> Select landmark!</option>
@@ -291,6 +285,43 @@ export default function TemporaryDrawer({
             <option value={'Old Hill Street Police Station'}>
               Old Hill Street Police Station
             </option>
+            <option value={'Former Ford Factory'}>Former Ford Factory</option>
+            <option value={'Changi Chapel and Museum'}>
+              Changi Chapel and Museum
+            </option>
+            <option value={'Kranji War Memorial'}>Kranji War Memorial</option>
+            <option value={'Bukit Chandu'}>Reflections at Bukit Chandu</option>
+            <option value={'Fort Canning Hill'}>Fort Canning Hill</option>
+            <option value={'Civilian War Memorial'}>
+              Civilian War Memorial
+            </option>
+          </NativeSelect>
+        </FormControl>
+      </Box>
+      <Box sx={{ minWidth: 120, margin: '10px', marginLeft: '20px' }}>
+        <FormControl fullWidth>
+          <InputLabel variant="standard" htmlFor="uncontrolled-native">
+            Political Landmarks
+          </InputLabel>
+          <NativeSelect
+            value={landmarkName}
+            onChange={handleChange}
+            inputProps={{
+              name: 'political',
+              id: 'uncontrolled-native-political',
+            }}
+          >
+            <option value={''}> Select landmark!</option>
+            <option value={'Parliament House'}>Parliament House</option>
+            <option value={'Istana'}>Istana</option>
+            <option value={'Supreme Court'}>Supreme Court</option>
+            <option value={'City Hall'}>City Hall</option>
+            <option value={'National Gallery of Singapore'}>
+              National Gallery of Singapore
+            </option>
+            <option value={'Bukit Chandu'}>Reflections at Bukit Chandu</option>
+            <option value={'The Padang'}>The Padang</option>
+            <option value={'Raffles Place'}>Raffles Place</option>
           </NativeSelect>
         </FormControl>
       </Box>
@@ -324,7 +355,7 @@ export default function TemporaryDrawer({
 
           <Typography
             variant="h"
-            sx={{ fontFamily: 'Roboto', color: 'primary' }}
+            sx={{ fontFamily: 'Roboto', color: 'maroon' }}
           >
             {aiResponse.split('\n').map((line, index) => (
               <React.Fragment key={index}>
@@ -350,7 +381,7 @@ export default function TemporaryDrawer({
     </Box>
   );
 
-  console.log(landmarkName);
+  console.log(timelineClicked);
 
   return (
     <div>
@@ -373,23 +404,28 @@ export default function TemporaryDrawer({
           <AppBackground />
         )}
 
-        {landmarkName === 'Raffles Hotel' && timelineClicked && (
+        {/* {landmarkName === 'Raffles Hotel' && timelineClicked && (
           <Box className="overlay">
             <Timeline
+              theme={{
+                primary: 'maroon',
+                secondary: 'maroon',
+                cardBgColor: 'black',
+                cardForeColor: 'maroon',
+              }}
               timelineClicked={timelineClicked}
               setTimelineClicked={setTimelineClicked}
             />
           </Box>
-        )}
-        {landmarkName === 'Old Hill Street Police Station' &&
-          timelineClicked && (
-            <Box className="overlay">
-              <TimelineOldHill
-                timelineClicked={timelineClicked}
-                setTimelineClicked={setTimelineClicked}
-              />
-            </Box>
-          )}
+        )} */}
+
+        <>
+          <HistoricalLandmarkTimelineCollection
+            landmarkName={landmarkName}
+            timelineClicked={timelineClicked}
+            setTimelineClicked={setTimelineClicked}
+          />
+        </>
       </React.Fragment>
     </div>
   );

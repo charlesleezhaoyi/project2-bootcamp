@@ -88,6 +88,7 @@ const GuidePage = () => {
             fontSize: '2.25rem',
             fontWeight: '500',
             marginBottom: '1.5rem',
+            color: 'maroon',
           }}
         >
           User Guide
@@ -101,11 +102,12 @@ const GuidePage = () => {
               fontSize: '1.5rem',
               fontWeight: '500',
               marginBottom: '1.5rem',
+              color: 'maroon',
             }}
           >
             Getting Started
           </Typography>
-          <Typography sx={{ marginBottom: '1rem', color: '#667' }}>
+          <Typography sx={{ marginBottom: '1rem', color: 'maroon' }}>
             Welcome to our app! Getting started is a breeze. Upon launching,
             you'll find a user-friendly interface guiding you through the
             essentials. Follow the prompts to set up your preferences, explore
@@ -122,11 +124,12 @@ const GuidePage = () => {
               fontSize: '1.5rem',
               fontWeight: '500',
               marginBottom: '1.5rem',
+              color: 'maroon',
             }}
           >
             How to Use the Maps
           </Typography>
-          <Typography sx={{ marginBottom: '1rem', color: '#667' }}>
+          <Typography sx={{ marginBottom: '1rem', color: 'maroon' }}>
             Uncover the world with our interactive maps feature! Navigate
             through nature parks, historical landmarks, and political landmarks.
             Each landmark is marked with informative pills. Click on them to
@@ -141,11 +144,12 @@ const GuidePage = () => {
               fontSize: '1.5rem',
               fontWeight: '500',
               marginBottom: '1.5rem',
+              color: 'maroon',
             }}
           >
             How to Use the Quizzes
           </Typography>
-          <Typography sx={{ marginBottom: '1rem', color: '#667' }}>
+          <Typography sx={{ marginBottom: '1rem', color: 'maroon' }}>
             Engage your mind with our dynamic and AI-generated quizzes! Tailored
             to the categories of nature parks, historical landmarks, and
             political landmarks, these quizzes offer a fun and educational
@@ -163,11 +167,12 @@ const GuidePage = () => {
               fontSize: '1.5rem',
               fontWeight: '500',
               marginBottom: '1.5rem',
+              color: 'maroon',
             }}
           >
             Troubleshooting Tips
           </Typography>
-          <Typography sx={{ marginBottom: '1rem', color: '#667' }}>
+          <Typography sx={{ marginBottom: '1rem', color: 'maroon' }}>
             Encountering an issue? We've got you covered. If you find yourself
             unable to access certain features or encounter delays, it might be
             due to the rate limit on requests to the OpenAI API. Our system is
@@ -203,6 +208,7 @@ const GuidePage = () => {
                 fontSize: '2.25rem',
                 fontWeight: '500',
                 marginBottom: '1.5rem',
+                color: 'maroon',
               }}
             >
               Awesome AI functionality!
@@ -244,6 +250,7 @@ const GuidePage = () => {
                 fontSize: '2.25rem',
                 fontWeight: '500',
                 marginBottom: '1.5rem',
+                color: 'maroon',
               }}
             >
               Really sick maps!
@@ -286,6 +293,7 @@ const GuidePage = () => {
                 fontSize: '2.25rem',
                 fontWeight: '500',
                 marginBottom: '1.5rem',
+                color: 'maroon',
               }}
             >
               Quizzes are challenging!
