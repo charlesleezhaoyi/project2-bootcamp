@@ -313,15 +313,48 @@ export default function TemporaryDrawer({
           >
             <option value={''}> Select landmark!</option>
             <option value={'Parliament House'}>Parliament House</option>
-            <option value={'Istana'}>Istana</option>
+            <option value={'Istana Singapore'}>Istana</option>
             <option value={'Supreme Court'}>Supreme Court</option>
             <option value={'City Hall'}>City Hall</option>
             <option value={'National Gallery of Singapore'}>
               National Gallery of Singapore
             </option>
-            <option value={'Bukit Chandu'}>Reflections at Bukit Chandu</option>
+            <option value={'The Fullerton Building'}>
+              The Fullerton Building
+            </option>
             <option value={'The Padang'}>The Padang</option>
             <option value={'Raffles Place'}>Raffles Place</option>
+          </NativeSelect>
+        </FormControl>
+      </Box>
+      <Box sx={{ minWidth: 120, margin: '10px', marginLeft: '20px' }}>
+        <FormControl fullWidth>
+          <InputLabel variant="standard" htmlFor="uncontrolled-native">
+            Nature Parks
+          </InputLabel>
+          <NativeSelect
+            value={landmarkName}
+            onChange={handleChange}
+            inputProps={{
+              name: 'nature',
+              id: 'uncontrolled-native-nature',
+            }}
+          >
+            <option value={''}> Select landmark!</option>
+            <option value={'Bukit Timah Nature Reserve'}>
+              Bukit Timah Nature Reserve
+            </option>
+            <option value={'Singapore Botanic Gardens'}>
+              Singapore Botanic Gardens
+            </option>
+            <option value={'MacRitchie Reservoir Park'}>
+              MacRitchie Reservoir Park
+            </option>
+            <option value={'Fort Canning Park'}>Fort Canning Park</option>
+            <option value={'Gardens By The Bay'}>Gardens By The Bay</option>
+            <option value={'Mount Faber Park'}>Mount Faber Park</option>
+            <option value={'Chek Jawa Wetlands'}>Chek Jawa Wetlands</option>
+            <option value={'Pulau Ubin'}>Pulau Ubin</option>
           </NativeSelect>
         </FormControl>
       </Box>
