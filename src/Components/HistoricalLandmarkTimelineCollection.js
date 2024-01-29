@@ -29,6 +29,7 @@ import {
   TimelineGardensByTheBay,
   TimelineMacRitchieReservoir,
   TimelineMountFaber,
+  TimelinePulauUbin,
 } from './Timelines/TimelineNature';
 
 const HistoricalLandmarkTimelineCollection = ({
@@ -231,6 +232,15 @@ const HistoricalLandmarkTimelineCollection = ({
       case 'Chek Jawa Wetlands':
         return (
           <TimelineChekJawa
+            timelineClicked={timelineClicked}
+            setTimelineClicked={setTimelineClicked}
+            mode="VERTICAL_ALTERNATING"
+          />
+        );
+
+      case 'Pulau Ubin':
+        return (
+          <TimelinePulauUbin
             timelineClicked={timelineClicked}
             setTimelineClicked={setTimelineClicked}
             mode="VERTICAL_ALTERNATING"
