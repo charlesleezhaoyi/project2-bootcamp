@@ -336,7 +336,7 @@ const App = () => {
               <RenderMap
                 sendMessage={sendMessage}
                 landmarks={selectedLandmarks}
-                onDirectionsResult={handleDirectionsResult}
+                // onDirectionsResult={handleDirectionsResult}
               />
               <StyledGridPills
                 item

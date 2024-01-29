@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   GoogleMap,
   useLoadScript,
@@ -6,8 +6,8 @@ import {
   InfoWindow,
   DirectionsRenderer,
   DirectionsService,
-} from "@react-google-maps/api";
-import axios from "axios";
+} from '@react-google-maps/api';
+import axios from 'axios';
 //import singaporeflag from "../../Data/singaporeflag.png";
 
 // const icon = singaporeflag;
@@ -17,8 +17,8 @@ import axios from "axios";
 // };
 
 const mapContainerStyle = {
-  width: "100vw",
-  height: "100vh",
+  width: '100vw',
+  height: '100vh',
 };
 const center = {
   lat: 1.3513,
@@ -26,7 +26,7 @@ const center = {
 };
 
 function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
-  const [libraries] = useState(["places"]);
+  const [libraries] = useState(['places']);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -37,8 +37,8 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
   //   lng: null,
   // });
   const [selectedPlace, setSelectedPlace] = useState({
-    lat: null,
-    lng: null,
+    lat: 1.3513,
+    lng: 103.81404,
   });
   const [userStartLocation, setUserStartLocation] = useState({
     lat: 1.3513,
@@ -50,7 +50,7 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
   const mapRef = useRef();
 
   const onMapLoad = useCallback((map) => {
-    console.log("1. Map Loaded");
+    console.log('1. Map Loaded');
     mapRef.current = map;
     const transitLayer = new window.google.maps.TransitLayer();
     const trafficLayer = new window.google.maps.TrafficLayer();
@@ -61,32 +61,32 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
   }, []);
 
   const onDirectionsServiceLoad = useCallback((directionsService) => {
-    console.log("2. Directions Service Loaded");
+    console.log('2. Directions Service Loaded');
     directionsServiceRef.current = directionsService;
   }, []);
 
   const onDirectionsRendererLoad = useCallback((directionsRenderer) => {
-    console.log("3. Directions RendererLoaded");
+    console.log('3. Directions RendererLoaded');
     directionsRendererRef.current = directionsRenderer;
   }, []);
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          setUserStartLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        function () {}
-      );
-    } else {
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       function (position) {
+  //         setUserStartLocation({
+  //           lat: position.coords.latitude,
+  //           lng: position.coords.longitude,
+  //         });
+  //       },
+  //       function () {},
+  //     );
+  //   } else {
+  //   }
+  // }, []);
 
   const attachInstructionText = (marker, text) => {
-    window.google.maps.event.addListener(marker, "click", function () {
+    window.google.maps.event.addListener(marker, 'click', function () {
       const stepDisplay = new window.google.maps.InfoWindow();
       stepDisplay.setContent(text);
       stepDisplay.open(mapRef.current, marker);
@@ -107,7 +107,7 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
 
   const calculateRoute = useCallback(
     (selectedPlace) => {
-      console.log("Calculating Route");
+      console.log('Calculating Route');
       console.log(userStartLocation);
       const start = userStartLocation;
       console.log(selectedPlace);
@@ -115,12 +115,12 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
       if (
         !start ||
         !end ||
-        typeof start.lat !== "number" ||
-        typeof start.lng !== "number" ||
-        typeof end.lat !== "number" ||
-        typeof end.lng !== "number"
+        typeof start.lat !== 'number' ||
+        typeof start.lng !== 'number' ||
+        typeof end.lat !== 'number' ||
+        typeof end.lng !== 'number'
       ) {
-        console.error("Invalid start or end:", start, end);
+        console.error('Invalid start or end:', start, end);
         return;
       }
 
@@ -129,10 +129,10 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
           {
             origin: start,
             destination: end,
-            travelMode: "TRANSIT",
+            travelMode: 'TRANSIT',
           },
           (result, status) => {
-            if (status === "OK") {
+            if (status === 'OK') {
               try {
                 if (directionsRendererRef.current) {
                   directionsRendererRef.current.setDirections(result);
@@ -140,39 +140,39 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
                 console.log(result);
                 const steps = result.routes[0].legs[0].steps;
                 console.log(steps);
-                if (typeof onDirectionsResult === "function") {
+                if (typeof onDirectionsResult === 'function') {
                   onDirectionsResult(steps);
                   showSteps(result);
                 }
               } catch (error) {
                 console.error(
-                  "Error setting directions or calling onDirectionsResult:",
-                  error
+                  'Error setting directions or calling onDirectionsResult:',
+                  error,
                 );
               }
             } else {
               console.error(`Error calculating route: ${status}`);
             }
-          }
+          },
         );
       }
     },
-    [userStartLocation, onDirectionsResult]
+    [userStartLocation, onDirectionsResult],
   );
 
   const onMarkerClick = useCallback(
     (position) => {
-      console.log("Marker clicked");
+      console.log('Marker clicked');
       mapRef.current.panTo(position);
       mapRef.current.setZoom(15);
       setSelectedPlace(position);
       calculateRoute(position);
     },
-    [calculateRoute]
+    [calculateRoute],
   );
 
   const onMapClick = useCallback((event) => {
-    console.log("map clicked");
+    console.log('map clicked');
     const lat = event.latLng.lat();
     console.log(lat);
     const lng = event.latLng.lng();
@@ -186,19 +186,21 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
     console.log(newLocation);
     axios
       .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`,
       )
       .then((res) => {
         setSelectedPlace(res.data.results[0]);
         sendMessage(
           `You are a world class historian, Associate Professor Joey Long, with expert knowledge on Singapore's every landmark and building, as well as its relevant historical developments. 
-          What is the name of the landmark with the following address:${res.data.results[0].formatted_address}. Being as concise, succinct as possible, use different paragraphs and prepend each new paragraph with TAG, followed by sharing its history with Singaporeans, in order to provide them with quality history education. Avoid the use of any of the following symbols ':'`
+          What is the name of the landmark with the following address:${res.data.results[0].formatted_address}. Being as concise, succinct as possible, use different paragraphs and prepend each new paragraph with TAG, followed by sharing its history with Singaporeans, in order to provide them with quality history education. Avoid the use of any of the following symbols ':'`,
         );
       });
   }, []);
 
-  if (loadError) return "Error loading maps";
-  if (!isLoaded) return "Loading Maps";
+  if (loadError) return 'Error loading maps';
+  if (!isLoaded) return 'Loading Maps';
+
+  console.log(selectedPlace);
 
   return (
     <>
@@ -222,7 +224,7 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
           />
         ))}
         <Marker position={selectedPlace} onLoad={() => setMarkerLoaded(true)}>
-          {markerLoaded && (
+          {markerLoaded && selectedPlace.lat !== 1.3513 && (
             <InfoWindow>
               <div>
                 <h2>{selectedPlace.formatted_address}</h2>
@@ -230,7 +232,7 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
             </InfoWindow>
           )}
         </Marker>
-        <DirectionsService
+        {/* <DirectionsService
           options={{
             origin: userStartLocation,
             destination: selectedPlace,
@@ -242,7 +244,7 @@ function RenderMap({ sendMessage, landmarks, onDirectionsResult }) {
           }}
           onLoad={onDirectionsServiceLoad}
         />
-        <DirectionsRenderer onLoad={onDirectionsRendererLoad} />
+        <DirectionsRenderer onLoad={onDirectionsRendererLoad} /> */}
       </GoogleMap>
       {/* </LoadScript> */}
     </>
